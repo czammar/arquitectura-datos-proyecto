@@ -21,7 +21,7 @@
 
 ### 1. Descripción del repositorio
 
-El presente repositorio contiene los archivos asociados al proyecto de la materia de Arquitectura de Productos de Datos, el cual versa sobre la predicción de retrazo o cancelación de los vuelos de la base de datos denominada conocida como [RITA](http://stat-computing.org/dataexpo/2009/the-data.html) (ver también [transtats.bts.gov](https://www.transtats.bts.gov/OT_Delay/OT_DelayCause1.asp)); esta agrupa una serie de datos de vuelos que incluyen salidas a tiempo, llegadas a tiempo, demoras, vuelos cancelados de todo Estados Unidos del Departamento de Transporte.
+El presente repositorio contiene los archivos asociados al proyecto de la materia de Arquitectura de Productos de Datos, el cual versa sobre la predicción de retraso o cancelación de los vuelos de la base de datos denominada conocida como [RITA](http://stat-computing.org/dataexpo/2009/the-data.html) (ver también [transtats.bts.gov](https://www.transtats.bts.gov/OT_Delay/OT_DelayCause1.asp)); esta agrupa una serie de datos de vuelos que incluyen salidas a tiempo, llegadas a tiempo, demoras, vuelos cancelados de todo Estados Unidos del Departamento de Transporte.
 
 Cabe destacar que RITA posee una frecuencia de actualización mensual, con datos desde junio del 2003.
 
