@@ -60,12 +60,10 @@ Para facilitar el entendimiento de la información recién expuesta, la siguient
 | Flight Number                                   |  Un código alfanumérico de uno a cuatro caracteres para un vuelo en particular. |
 | In-Flight Time                                  | El tiempo total que una aeronave está en el aire entre un par de aeropuertos de origen a destino, es decir, desde las ruedas en el aeropuerto de origen hasta las ruedas en el aeropuerto de destino.  |
 | Late Flight                                     |  Un vuelo que llega o sale 15 minutos o más después de la hora programada. |
-| Passenger Revenues                              |  Ingresos del transporte aéreo de pasajeros.
- |
-| Scheduled Departure Time                        |  La hora programada en que un avión debe despegar del aeropuerto de origen. |
-| Scheduled Time Of Arrival                       |  La hora programada en que un avión debe cruzar un cierto punto (aterrizaje o corrección de medición). |
-| Taxi-In Time                                    |El tiempo transcurrido entre las ruedas hacia abajo y la llegada a la puerta del aeropuerto de destino.
-   |
+| Passenger Revenues                              |  Ingresos del transporte aéreo de pasajeros.|
+| Scheduled Departure Time                        |  La hora programada en que un avión debe despegar del aeropuerto de origen.|
+| Scheduled Time Of Arrival | La hora programada en que un avión debe cruzar un cierto punto (aterrizaje o corrección de medición).|
+| Taxi-In Time                                    |El tiempo transcurrido entre las ruedas hacia abajo y la llegada a la puerta del aeropuerto de destino.|
 | Taxi-Out Time                                   |  El tiempo transcurrido entre la salida de la puerta del aeropuerto de origen y las ruedas. |
 | Unique Carrier                                  |  Código de transportista único. Es el código de operador más recientemente utilizado por un operador. Se utiliza un sufijo numérico para distinguir códigos duplicados, por ejemplo, PA, PA (1), PA (2). Use este campo para realizar el análisis de los datos informados por un solo operador. |
 | World Area Code (WAC)                           |  Códigos numéricos utilizados para identificar áreas geopolíticas como países, estados (EE. UU.), Provincias (Canadá) y territorios o posesiones de ciertos países. Los códigos se utilizan dentro de los diversos bancos de datos mantenidos por la Oficina de Información de Aerolíneas (OAI) y son creados por OAI. |
