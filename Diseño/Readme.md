@@ -20,9 +20,54 @@ En línea con la exposición anterior, el problema planteado se abordará desde 
 
 En tales términos, el siguiente diagrama muestra una propuesta para el diseño del producto de datos, donde la solución propuesta será una aplicación web a través de la cuál el usuario ingresará la clave del vuelo para recibir una predicción del lapso tiempo de retrazo predecido, o la posible cancelación del mismo.
 
-![Alt text](Imagenes/disenyo.png?raw=true "Title")
+![Diagrama de flujo del producto](Imagenes/disenyo.png?raw=true "Title")
 
 
 ## 3. Descripción de la base de datos
 
-[LUIS EUGENIO]
+Como ya se mencionó, esta base de datos contiene los tiempos planeados y verdaderos de despegue y llegada reportados por aereolíneas certificadas de Estados Unidos que acumulan al menos un porciento de las ganancias de pasajeros domésticos planeados. Los datos se recolectaron por la Oficina de Información Aérea, del Departamento de Estadísticas de Transporte (US DOT, por sus siglas en inglés).
+
+Los datos van desde 1987, hasta 2019, actualizándose mes con mes. Las aereolíneas reportan (muchas veces voluntariamente) los datos generales siquientes de los vuelos que operan: llegadas y salidas a tiempo para vuelos por mes y por año, por aereolínea, por aereopuertos de origen y de destino. Incluye salidas y llegadas planeadas y verdaderas, vuelos cancelados o desviados, los tiempos de taxi-in y taxi-out, las causas de retraso y cancelación, tiempo de vuelo, y distancia continua.
+
+A continuación se muestra un consolidado de las variables de la base de datos que fueron truncadas hasta 2008:
+
+![Descripción de las variables](Imagenes/data_var.jpeg?raw=true "Title")
+
+La siguiente tabla es sencillamente un resumen de las variables de los datos. Sin embargo, resta añadir descripciones más exahustivas de las variables.
+
+| Variable                                        | Descripción   |
+|-------------------------------------------------|---|
+| Actual Arrival Times                            |La hora de llegada a la puerta es el caso cuando el piloto pone el freno de estacionamiento de la aeronave después de llegar a la puerta del aeropuerto o al área de descarga de pasajeros. Si el freno de estacionamiento no está activado, registre el tiempo de apertura de la puerta del pasajero. Además, los transportistas que utilizan un Sistema de guía de acoplamiento (DGS, por sus siglas en inglés) pueden registrar el tiempo oficial de llegada de la puerta cuando el avión se detiene en la marca de estacionamiento adecuada.   |
+| Actual Departure Times                          |   La hora de salida de la puerta es el caso en que el piloto suelta el freno de estacionamiento de la aeronave después de que los pasajeros se hayan cargado y las puertas de la aeronave se hayan cerrado. En los casos en que el vuelo regresó a la puerta de salida antes de la hora de salida de las ruedas y salió por segunda vez, informe la última hora de salida de la puerta antes de la hora de salida de las ruedas. En caso de retorno aéreo, informe la última hora de salida de la puerta antes del regreso de la puerta. Si los pasajeros fueron abordados sin poner el freno de estacionamiento, registre la hora en que se cerró la puerta del pasajero. Además, los transportistas que utilizan un Sistema de guía de atraque pueden registrar el tiempo oficial de salida de la puerta en función del movimiento de la aeronave. Por ejemplo, un DGS registra el tiempo de salida de la puerta cuando la aeronave se mueve a más de 1 metro de la marca de estacionamiento apropiada en 15 segundos. Luego se restan quince segundos del tiempo registrado para obtener el tiempo de salida apropiado.|
+| Airline ID                                      |Un número de identificación asignado por US DOT para identificar una aerolínea (compañía aérea) única. Una aerolínea (aerolínea) única se define como una tenedora e informa bajo el mismo certificado DOT, independientemente de su Código, Nombre o compañía / corporación controladora. Use este campo para el análisis en un rango de años.   |
+| Airport Code                                    | Un código alfanumérico de tres caracteres emitido por el Departamento de Transporte de EE. UU., Que es la designación oficial del aeropuerto. El código de aeropuerto no siempre es exclusivo de un aeropuerto específico porque los códigos de aeropuerto pueden cambiar o pueden reutilizarse.  |
+| Airport ID                                      | Un número de identificación asignado por US DOT para identificar un aeropuerto único. Utilice este campo para el análisis del aeropuerto a lo largo de varios años porque un aeropuerto puede cambiar su código de aeropuerto y los códigos de aeropuerto pueden reutilizarse.  |
+| Arrival Delay                                   | El retraso de llegada es igual a la diferencia de la hora de llegada real menos la hora de llegada programada. Un vuelo se considera a tiempo cuando llega menos de 15 minutos después de su hora de llegada publicada.  |
+| CRS                                             |   Sistema de reserva por computadora. CRS proporciona información sobre horarios de aerolíneas, tarifas y disponibilidad de asientos a agencias de viajes y permite a los agentes reservar asientos y emitir boletos.|
+| Cancelled Flight                                |  Un vuelo que figuraba en el sistema de reserva de computadoras de un transportista durante los siete días calendario anteriores a la salida programada pero que no fue operado. |
+| Carrier Code                                    |  Código asignado por IATA y comúnmente utilizado para identificar un operador. Como el mismo código puede haber sido asignado a diferentes operadores a lo largo del tiempo, el código no siempre es único. |
+| Certificate Of Public Convenience And Necessity |Un certificado emitido a una compañía aérea menor de 49 U.S.C. 41102, por el Departamento de Transporte que autoriza al transportista a participar en el transporte aéreo.   |
+| Certificated Air Carrier                        | Una compañía aérea que posee un Certificado de Conveniencia Pública y Necesidad emitido por el DOT para realizar servicios interestatales programados. Las operaciones no programadas o chárter también pueden ser realizadas por estos transportistas. (igual que el transportista aéreo certificado)  |
+| Certified Air Carrier                           |  Una compañía aérea que posee un Certificado de Conveniencia Pública y Necesidad emitido por el DOT para realizar servicios interestatales programados. Las operaciones no programadas o chárter también pueden ser realizadas por estos transportistas. (igual que el transportista aéreo certificado). |
+| City Market ID                                  |  Un número de identificación asignado por US DOT para identificar un mercado de la ciudad. Use este campo para consolidar aeropuertos que presten servicio al mismo mercado de la ciudad. |
+| Departure Delay                                 |   La diferencia entre la hora de salida programada y la hora de salida real desde la puerta del aeropuerto de origen.|
+| Diverted Flight                                 |  Un vuelo que debe aterrizar en un destino que no sea el destino programado original por razones que escapan al control del piloto / compañía. |
+| Domestic Operations                             |  Todas las operaciones de compañías aéreas que tienen destinos dentro de los 50 Estados Unidos, el Distrito de Columbia, el Estado Libre Asociado de Puerto Rico y las Islas Vírgenes de los Estados Unidos. |
+| Elapsed Time                                    |El tiempo calculado desde la hora de salida de la puerta hasta la hora de llegada de la puerta.   |
+| FIPS                                            |  Normas federales de procesamiento de información. Por lo general, se refiere a un código asignado a cualquiera de una variedad de entidades geográficas (por ejemplo, condados, estados, áreas metropolitanas, etc.). Los códigos FIPS están destinados a simplificar la recopilación, el procesamiento y la difusión de datos y recursos del Gobierno Federal. |
+| Flight Number                                   |  Un código alfanumérico de uno a cuatro caracteres para un vuelo en particular. |
+| In-Flight Time                                  | El tiempo total que una aeronave está en el aire entre un par de aeropuertos de origen a destino, es decir, desde las ruedas en el aeropuerto de origen hasta las ruedas en el aeropuerto de destino.  |
+| Late Flight                                     |  Un vuelo que llega o sale 15 minutos o más después de la hora programada. |
+| Passenger Revenues                              |  Ingresos del transporte aéreo de pasajeros.
+ |
+| Scheduled Departure Time                        |  La hora programada en que un avión debe despegar del aeropuerto de origen. |
+| Scheduled Time Of Arrival                       |  La hora programada en que un avión debe cruzar un cierto punto (aterrizaje o corrección de medición). |
+| Taxi-In Time                                    |El tiempo transcurrido entre las ruedas hacia abajo y la llegada a la puerta del aeropuerto de destino.
+   |
+| Taxi-Out Time                                   |  El tiempo transcurrido entre la salida de la puerta del aeropuerto de origen y las ruedas. |
+| Unique Carrier                                  |  Código de transportista único. Es el código de operador más recientemente utilizado por un operador. Se utiliza un sufijo numérico para distinguir códigos duplicados, por ejemplo, PA, PA (1), PA (2). Use este campo para realizar el análisis de los datos informados por un solo operador. |
+| World Area Code (WAC)                           |  Códigos numéricos utilizados para identificar áreas geopolíticas como países, estados (EE. UU.), Provincias (Canadá) y territorios o posesiones de ciertos países. Los códigos se utilizan dentro de los diversos bancos de datos mantenidos por la Oficina de Información de Aerolíneas (OAI) y son creados por OAI. |
+
+Finalmente, incluímos la distribución  durante el último año de los datos respecto a si los vuelos salieron a tiempo o se retrazaron (diferenciando la razón del retraso) en una horrible gráfica de pay que nos regala la fuente de la base de datos.
+
+![Composición de los datos durante 2019](Imagenes/data_ytd.jpeg?raw=true "Title")
