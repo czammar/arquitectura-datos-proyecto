@@ -4,36 +4,38 @@
 
 Como se ha mencionado previamente, el interés de este proyecto gira en torno a la base de datos denominada conocida como [RITA](http://stat-computing.org/dataexpo/2009/the-data.html), la cual provee una serie de datos de vuelos que incluyen salidas a tiempo, llegadas a tiempo, demoras, vuelos cancelados de todo Estados Unidos del Departamento de Transporte, poseyendo una frecuencia de actualización mensual, con datos históricos desde junio del 2003.
 
-Ahora bien, dado que los tiempos de viaje de los usuarios se encuentran sujetos a la disponibilidad y viabilidad de los vuelos de las aerolíneas comerciales, los cuales a su vez se encuentran estrechamente ligados a otros factores (por ejemplo, políticas comerciales, incidentes de seguridad o eventos climáticos), los pasajeros experimentan cierto nivel de incertidumbre sobre si sus vuelos serán retrazados o cancelados en definitiva.
+Ahora bien, dado que los tiempos de viaje de los usuarios se encuentran sujetos a la disponibilidad y viabilidad de los vuelos de las aerolíneas comerciales, los cuales a su vez se encuentran estrechamente ligados a otros factores (por ejemplo, políticas comerciales, incidentes de seguridad o eventos climáticos), los pasajeros experimentan cierto nivel de incertidumbre sobre si sus vuelos serán retrasados o cancelados en definitiva.
 
 Una forma de poder atacar la incertidumbre de los viajeros, sería contar con una sistema que pueda dar elementos a los usuarios acerca de 1) si existirá retraso en su vuelo, 2) en caso de que exista retraso, pueda informar el lapso de tiempo  equivalente a dicho evento, o 3) indique si su vuelo se cancelará. 
 
-Ello permitirá no solo que los usuarios preveean la administración de su tiempo al realizar viajes, sino que puedan diseñar estrategia que les permita continuar con su viaje en caso de una probable cancelación de un vuelo.
+Ello permitirá no solo que los usuarios prevean la administración de su tiempo al realizar viajes, sino que puedan diseñar estrategia que les permita continuar con su viaje en caso de una probable cancelación de un vuelo.
 
-Con ello en mente, el problema que pretende abordar el presente proyecto, a través del desarollo de producto de datos, es la incertidumbre de los viajeros ante retrazo en los vuelos, siendo la pregunta que guía el proyecto es ¿que intervalo de tiempo se va a retrazar mi vuelo?.
+Con ello en mente, el problema que pretende abordar el presente proyecto, a través del desarrollo de producto de datos, es la incertidumbre de los viajeros ante retraso en los vuelos, siendo la pregunta que guía el proyecto es ¿que intervalo de tiempo se va a retrasar mi vuelo?.
 
-El objetivo, por tanto, será desarollar un sistena que permita predecir retrazos en vuelos de forma precisa para que los viajeros puedan planear su agenda de viaje de acuerdo a los probables retrazos o cancelaciónes de las aerolíneas. Este sistema estará dirigido a los pasajeros de la aerolínea. Es decir, el público en general que va a viajar dentro de Estados Unidos. 
+El objetivo, por tanto, será desarrollar un sistema que permita predecir retrasos en vuelos de forma precisa para que los viajeros puedan planear su agenda de viaje de acuerdo a los probables retrasos o cancelaciones de las aerolíneas. Este sistema estará dirigido a los pasajeros de la aerolínea. Es decir, el público en general que va a viajar dentro de Estados Unidos. 
 
 ## 2. Diagrama (mock-up)
 
-En línea con la exposición anterior, el problema planteado se abordará desde la perspectiva de predicción. Para ello, se planteará, dentro del contexto de aprendizaje de máquina, un problema de clasificación con intervalos de tiempo secuenciales (*bins*), con amplitudd 15 minutos. Es decir, si el vuelo estará retrazado de 1 a 15 minutos, de 16 minutos a 30 minutos, en incrementos de 15 minutos, o bien si el vuelo será cancelado, para que este pueda preveer una estrategia que le permita continuar con su viaje.
+En línea con la exposición anterior, el problema planteado se abordará desde la perspectiva de predicción. Para ello, se planteará, dentro del contexto de aprendizaje de máquina, un problema de clasificación con intervalos de tiempo secuenciales (*bins*), con amplitud 15 minutos. Es decir, si el vuelo estará retrasado de 1 a 15 minutos, de 16 minutos a 30 minutos, en incrementos de 15 minutos, o bien si el vuelo será cancelado, para que este pueda prever una estrategia que le permita continuar con su viaje.
 
-En tales términos, el siguiente diagrama muestra una propuesta para el diseño del producto de datos, donde la solución propuesta será una aplicación web a través de la cuál el usuario ingresará la clave del vuelo para recibir una predicción del lapso tiempo de retrazo predecido, o la posible cancelación del mismo.
+En tales términos, el siguiente diagrama muestra una propuesta para el diseño del producto de datos, donde la solución propuesta será una aplicación web a través de la cuál el usuario ingresará la clave del vuelo para recibir una predicción del lapso tiempo de retraso predecido, o la posible cancelación del mismo.
 
 ![Diagrama de flujo del producto](Imagenes/disenyo.png?raw=true "Title")
 
 
 ## 3. Descripción de la base de datos
 
-Como ya se mencionó, esta base de datos contiene los tiempos planeados y verdaderos de despegue y llegada reportados por aereolíneas certificadas de Estados Unidos que acumulan al menos un porciento de las ganancias de pasajeros domésticos planeados. Los datos se recolectaron por la Oficina de Información Aérea, del Departamento de Estadísticas de Transporte (US DOT, por sus siglas en inglés).
+Como ya se mencionó, esta base de datos contiene los tiempos planeados y verdaderos de despegue, así como de llegada, reportados por aerolíneas certificadas de Estados Unidos que acumulan al menos $1\%$ de las ganancias provenientes de pasajeros domésticos planeados. Tales datos se recolectan por la Oficina de Información Aérea del Departamento de Estadísticas de Transporte (*US DOT*, por sus siglas en inglés).
 
-Los datos van desde 1987, hasta 2019, actualizándose mes con mes. Las aereolíneas reportan (muchas veces voluntariamente) los datos generales siquientes de los vuelos que operan: llegadas y salidas a tiempo para vuelos por mes y por año, por aereolínea, por aereopuertos de origen y de destino. Incluye salidas y llegadas planeadas y verdaderas, vuelos cancelados o desviados, los tiempos de taxi-in y taxi-out, las causas de retraso y cancelación, tiempo de vuelo, y distancia continua.
+Con referencia a su historicidad, este conjunto de datos comprende desde 1987, hasta 2019 (a la fecha de elaboración del presente documento), actualizándose mes con mes. 
+
+Sobre tales, es dable mencionar que las aerolíneas reportan, muchas veces voluntariamente, una serie de datos generales relativos a los vuelos que operan, en los términos siguientes términos: llegadas y salidas a tiempo para vuelos por mes y por año, por aerolínea, por aeropuertos de origen y de destino; lo cual incluye salidas y llegadas planeadas y verdaderas, vuelos cancelados o desviados, los tiempos de *taxi-in* y *taxi-out*, las causas de retraso y cancelación, tiempo de vuelo, así como distancia continua.
 
 A continuación se muestra un consolidado de las variables de la base de datos que fueron truncadas hasta 2008:
 
 ![Descripción de las variables](Imagenes/data_var.jpeg?raw=true "Title")
 
-La siguiente tabla es sencillamente un resumen de las variables de los datos. Sin embargo, resta añadir descripciones más exahustivas de las variables.
+Para facilitar el entendimiento de la información recién expuesta, la siguiente tabla muestra un resumen no exhaustivo de las variables en comento.
 
 | Variable                                        | Descripción   |
 |-------------------------------------------------|---|
@@ -47,8 +49,8 @@ La siguiente tabla es sencillamente un resumen de las variables de los datos. Si
 | Cancelled Flight                                |  Un vuelo que figuraba en el sistema de reserva de computadoras de un transportista durante los siete días calendario anteriores a la salida programada pero que no fue operado. |
 | Carrier Code                                    |  Código asignado por IATA y comúnmente utilizado para identificar un operador. Como el mismo código puede haber sido asignado a diferentes operadores a lo largo del tiempo, el código no siempre es único. |
 | Certificate Of Public Convenience And Necessity |Un certificado emitido a una compañía aérea menor de 49 U.S.C. 41102, por el Departamento de Transporte que autoriza al transportista a participar en el transporte aéreo.   |
-| Certificated Air Carrier                        | Una compañía aérea que posee un Certificado de Conveniencia Pública y Necesidad emitido por el DOT para realizar servicios interestatales programados. Las operaciones no programadas o chárter también pueden ser realizadas por estos transportistas. (igual que el transportista aéreo certificado)  |
-| Certified Air Carrier                           |  Una compañía aérea que posee un Certificado de Conveniencia Pública y Necesidad emitido por el DOT para realizar servicios interestatales programados. Las operaciones no programadas o chárter también pueden ser realizadas por estos transportistas. (igual que el transportista aéreo certificado). |
+| Certificated Air Carrier                        | Una compañía aérea que posee un Certificado de Conveniencia Pública y Necesidad emitido por el DOT para realizar servicios inter-estatales programados. Las operaciones no programadas o charter también pueden ser realizadas por estos transportistas. (igual que el transportista aéreo certificado)  |
+| Certified Air Carrier                           |  Una compañía aérea que posee un Certificado de Conveniencia Pública y Necesidad emitido por el DOT para realizar servicios inter-estatales programados. Las operaciones no programadas o charter también pueden ser realizadas por estos transportistas. (igual que el transportista aéreo certificado). |
 | City Market ID                                  |  Un número de identificación asignado por US DOT para identificar un mercado de la ciudad. Use este campo para consolidar aeropuertos que presten servicio al mismo mercado de la ciudad. |
 | Departure Delay                                 |   La diferencia entre la hora de salida programada y la hora de salida real desde la puerta del aeropuerto de origen.|
 | Diverted Flight                                 |  Un vuelo que debe aterrizar en un destino que no sea el destino programado original por razones que escapan al control del piloto / compañía. |
@@ -68,6 +70,6 @@ La siguiente tabla es sencillamente un resumen de las variables de los datos. Si
 | Unique Carrier                                  |  Código de transportista único. Es el código de operador más recientemente utilizado por un operador. Se utiliza un sufijo numérico para distinguir códigos duplicados, por ejemplo, PA, PA (1), PA (2). Use este campo para realizar el análisis de los datos informados por un solo operador. |
 | World Area Code (WAC)                           |  Códigos numéricos utilizados para identificar áreas geopolíticas como países, estados (EE. UU.), Provincias (Canadá) y territorios o posesiones de ciertos países. Los códigos se utilizan dentro de los diversos bancos de datos mantenidos por la Oficina de Información de Aerolíneas (OAI) y son creados por OAI. |
 
-Finalmente, incluímos la distribución  durante el último año de los datos respecto a si los vuelos salieron a tiempo o se retrazaron (diferenciando la razón del retraso) en una horrible gráfica de pay que nos regala la fuente de la base de datos.
+Finalmente, incluimos la distribución  durante el último año de los datos (2019) respecto a si los vuelos salieron a tiempo o se retrasaron (diferenciando la razón del retraso) en un gráfico de pay expuesto fuente de la base de datos(ver [https://www.transtats.bts.gov/OT_Delay/OT_DelayCause1.asp](https://www.transtats.bts.gov/OT_Delay/OT_DelayCause1.asp)).
 
 ![Composición de los datos durante 2019](Imagenes/data_ytd.jpeg?raw=true "Title")
