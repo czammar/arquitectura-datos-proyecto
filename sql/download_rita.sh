@@ -14,3 +14,5 @@ MONTH=11
 wget ${BASE_URL}${YEAR}"_"${MONTH}".zip"
 #echo ${url}
 #wget ${url}
+
+unzip On_Time_Reporting_Carrier_On_Time_Performance_1987_present_2019_11.zip
