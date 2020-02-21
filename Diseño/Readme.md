@@ -8,9 +8,9 @@ Ahora bien, dado que los tiempos de viaje de los usuarios se encuentran sujetos 
 
 Una forma de poder atacar la incertidumbre de los viajeros, sería contar con una sistema que pueda dar elementos a los usuarios acerca de 1) si existirá retraso en su vuelo, 2) en caso de que exista retraso, pueda informar el lapso de tiempo  equivalente a dicho evento, o 3) indique si su vuelo se cancelará. 
 
-Ello permitirá no solo que los usuarios prevean la administración de su tiempo al realizar viajes, sino que puedan diseñar estrategia que les permita continuar con su viaje en caso de una probable cancelación de un vuelo.
+Ello permitirá no solo que **los usuarios prevean la administración de su tiempo al realizar viajes**, sino que puedan diseñar estrategia que les permita continuar con su viaje en caso de una probable cancelación de un vuelo.
 
-Con ello en mente, el problema que pretende abordar el presente proyecto, a través del desarrollo de producto de datos, es la incertidumbre de los viajeros ante retraso en los vuelos, siendo la pregunta que guía el proyecto es ¿que intervalo de tiempo se va a retrasar mi vuelo?.
+Con ello en mente, el problema que pretende abordar el presente proyecto, a través del desarrollo de producto de datos, es la incertidumbre de los viajeros ante retraso en los vuelos, siendo la pregunta que guía el proyecto es **¿que intervalo de tiempo se va a retrasar mi vuelo, o si bien será cancelado?**.
 
 El objetivo, por tanto, será desarrollar un sistema que permita predecir retrasos en vuelos de forma precisa para que los viajeros puedan planear su agenda de viaje de acuerdo a los probables retrasos o cancelaciones de las aerolíneas. Este sistema estará dirigido a los pasajeros de la aerolínea. Es decir, el público en general que va a viajar dentro de Estados Unidos. 
 
