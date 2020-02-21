@@ -1,5 +1,7 @@
 
 --------------------- Preparación de esquemas
+-- Nota: se agrega una variable adicional, porque los renglones cuentan con una mas que los headers
+-- Esto no se menciona en la documentacion y me dio dolores de cabeza :(
 
 create schema if not exists raw;
 
