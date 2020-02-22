@@ -2,11 +2,11 @@
 
 Objetivo: Definir el mockup de ETL de su proyecto (sección ingestión de datos), este proceso se realizará con base en una serie especificaciones, a manera de preguntas que sirven como directrices del proyecto para la definición del ETL correspondiente al proyecto de la base de datos RITA.
 
-A continuación se abordan tales preguntas:
+En así que para dar contexto a como desarrollaremos el ETL del proyecto se abordan tales preguntas:
 
 ## Específicaciones
 1) ¿Con qué frecuencia se publican los datos?
-  - "Mensualmente".
+  - Como se ha mencionado previamente, para esta base de datos, se realizan actualizaciones de datos de manera mensual, sin embargo conocemos que la última publicación de los datos se realizó hasta Noviembre de 2019. Esto añade una consideración a la disponibilidad de la información, y los periodos en que se tiene que consultar para obtener el último tren de información disponible.
 2) ¿Cada cuánto ingestaremos los datos?
   - Semanalmente.
 3) ¿Cómo ingestaremos los datos?
