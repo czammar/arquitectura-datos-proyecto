@@ -30,5 +30,5 @@ A continuación se abordan tales preguntas:
 
 ## Diagrama
 
-
+![Diagrama de flujo del ETL](images/etl.png?raw=true "Title")
 (https://drive.google.com/file/d/1aYgxZ5BnPjNXAMo6qNAPVHjWbP7cOrB9/view?usp=sharing)
