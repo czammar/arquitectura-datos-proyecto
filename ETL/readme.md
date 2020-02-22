@@ -8,9 +8,11 @@ En así que para dar contexto a como desarrollaremos el ETL del proyecto se abor
 1) ¿Con qué frecuencia se publican los datos?
   - Como se ha mencionado previamente, para esta base de datos, se realizan actualizaciones de datos de manera mensual, sin embargo conocemos que la última publicación de los datos se realizó hasta Noviembre de 2019. Esto añade una consideración a la disponibilidad de la información, y los periodos en que se tiene que consultar para obtener el último tren de información disponible.
 2) ¿Cada cuánto ingestaremos los datos?
-  - Semanalmente.
+  - Considerando a la respuesta al pregunta 1), se plantea hacer una consulta de nuevos de manera semanal, para que una vez que se encuentren nuevas cargas de trenes de datos, podamos ingestar los procemos que permiten la modelación.
 3) ¿Cómo ingestaremos los datos?
-  - Con un bash script que se corre semanalmente. 
+  - El proceso de ingesta se plantea llevar a cabo a través de una serie de pasos:
+    * A través de un script de Bash, que se corre semanalmente, se obtienen los datos en formato .zip, para periodos mensuales. Esto con miras a obtener la última información disponible.
+    * El proceso de ejecución
 4) ¿Dónde guardaremos los datos?
   - En primera instancia en una cubeta S3, después los transformaremos en una base de datos postgres
 5) ¿En qué formato?
