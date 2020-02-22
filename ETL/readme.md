@@ -22,6 +22,9 @@ En así que para dar contexto a como desarrollaremos el ETL del proyecto se abor
 
 ## Descripción de étapas
 ### Extract
+En una instancia EC2  corre programa en python llamado update.py donde semanalmente usando CROM llama download_rita.sh, en este punto compara si hay actualizaciones por medio de PostgresSQL.
+
+La función de PostgresSQL es con los parámetros mes y año buscar cuál fue el último mes cargado por medio de ordenar la tabla en forma descendente y comparar si el primer dato es igual o diferente, si este es diferente se actualiza la tabla, en caso de estar vacía la tabla carga el primer mes histórico.
 
 ### Load
 
