@@ -28,5 +28,5 @@ Objetivo: Definir el mockup de ETL de su proyecto (sección ingestión de datos)
 
 ## Diagrama
 
-![Diagrama de flujo del ETL](Imagenes/etl.png?raw=true "Title")
+![Diagrama de flujo del ETL](images/etl.png?raw=true "Title")
 (https://drive.google.com/file/d/1aYgxZ5BnPjNXAMo6qNAPVHjWbP7cOrB9/view?usp=sharing)
