@@ -1,6 +1,8 @@
 # ETL
 
-Objetivo: Definir el mockup de ETL de su proyecto (sección ingestión de datos)
+Objetivo: Definir el mockup de ETL de su proyecto (sección ingestión de datos), este proceso se realizará con base en una serie especificaciones, a manera de preguntas que sirven como directrices del proyecto para la definición del ETL correspondiente al proyecto de la base de datos RITA.
+
+A continuación se abordan tales preguntas:
 
 ## Específicaciones
 1) ¿Con qué frecuencia se publican los datos?
@@ -16,7 +18,7 @@ Objetivo: Definir el mockup de ETL de su proyecto (sección ingestión de datos)
   - En un futuro exploraremos guardarlo en parquet.
   - Dentro de S3 se organizaran por fechas.
 6) ¿Los transformamos antes de guardarlos?
-  - No. 
+  - No.
 
 ## Descripción de étapas
 ### Extract
