@@ -33,5 +33,5 @@ La función de PostgresSQL es con los parámetros mes y año buscar cuál fue el
 
 ## Diagrama
 
-![Diagrama de flujo del ETL](images/etl.png?raw=true "Title")
+![Diagrama de flujo del ETL](images/etl2.png?raw=true "Title")
 (https://drive.google.com/file/d/1aYgxZ5BnPjNXAMo6qNAPVHjWbP7cOrB9/view?usp=sharing)
