@@ -42,6 +42,7 @@ En una instancia EC2  corre programa en python llamado update.py donde semanalme
 La función de PostgresSQL es con los parámetros mes y año buscar cuál fue el último mes cargado por medio de ordenar la tabla en forma descendente y comparar si el primer dato es igual o diferente, si este es diferente se actualiza la tabla, en caso de estar vacía la tabla carga el primer mes histórico.
 
 ### Load
+En el paso Load corre un script de Bash en el cual los se cargan los datos en una cubeta S3 en formato zip, y estos datos están ordenados por fecha. Los datos son revisados semanalmente y se agregan los bloques nuevos de datos a la cubeta.
 
 ### Transform
 
