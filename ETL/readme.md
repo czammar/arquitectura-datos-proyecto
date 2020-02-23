@@ -1,26 +1,39 @@
-# ETL
+# ETL para el proyecto de la base de datos RITA
 
-Objetivo: Definir el mockup de ETL de su proyecto (sección ingestión de datos), este proceso se realizará con base en una serie especificaciones, a manera de preguntas que sirven como directrices del proyecto para la definición del ETL correspondiente al proyecto de la base de datos RITA.
+25 de febrero de 2019
 
-En así que para dar contexto a como desarrollaremos el ETL del proyecto se abordan tales preguntas:
+## 1. Introducción
 
-## Específicaciones
-1) ¿Con qué frecuencia se publican los datos?
-  - Como se ha mencionado previamente, para esta base de datos, se realizan actualizaciones de datos de manera mensual, sin embargo conocemos que la última publicación de los datos se realizó hasta Noviembre de 2019. Esto añade una consideración a la disponibilidad de la información, y los periodos en que se tiene que consultar para obtener el último tren de información disponible.
-2) ¿Cada cuánto ingestaremos los datos?
-  - Considerando a la respuesta al pregunta 1), se plantea hacer una consulta de nuevos de manera semanal, para que una vez que se encuentren nuevas cargas de trenes de datos, podamos ingestar los procemos que permiten la modelación.
-3) ¿Cómo ingestaremos los datos?
+Este documento tiene como objetivo de describir, a manera de *mock-up* el ETL para la ingestión de los datos de RITA para el diseño
+de un producto de datos encaminado a predecir intervalos de retrazo de los vuelo de los usuarios de aerolíneas en Estados Unidos.
+
+Dicho proceso se realizará con base en una serie especificaciones que se plantearán, a manera de preguntas, y que serán las directrices de ésta etapa del proyecto, mismas que se exponen a continuación.
+
+## 2. Específicaciones para la definición del ETL y la ingesta de datos
+
+**1) ¿Con qué frecuencia se publican los datos?**
+  - Para esta base se realizan actualizaciones de datos de manera mensual. Sin embargo se identificó que la última publicación de los mismos se realizó hasta Noviembre de 2019. Esto añade un punto a considerar en el proyecto sobre la disponibilidad de la información, y los periodos en que se tiene que consultar para obtener el último tren de información disponible en razón de que se deberá realizar consultas periódicas en busca de nuevos trenes de datos disponibles, cuales podrían estar listos con un cierto desfase.
+
+  En cualquier caso, el proceso de ingesta de datos se realizará con base en la información disponible más reciente.
+
+**2) ¿Cada cuánto ingestaremos los datos?**
+  - Considerando a la respuesta al pregunta previa, se plantea hacer una consulta de nuevos de manera semanal, para que una vez que se encuentren nuevas cargas de trenes de datos, podamos ingestar los procemos que permiten la modelación.
+
+**3) ¿Cómo ingestaremos los datos?**
   - El proceso de ingesta se plantea llevar a cabo a través de una serie de pasos:
     * A través de un script de Bash, que se corre semanalmente, se obtienen los datos en formato .zip, para periodos mensuales. Esto con miras a obtener la última información disponible.
     * El proceso de ejecución
-4) ¿Dónde guardaremos los datos?
-  - En primera instancia en una cubeta S3, después los transformaremos en una base de datos postgres
-5) ¿En qué formato?
-  - Se guardan en formato .zip (en la cubeta S3). 
+
+**4) ¿Dónde guardaremos los datos?**
+  - En primera instancia en una cubeta S3, después los transformaremos en una base de datos PostGreSQL
+
+**5) ¿En qué formato?**
+  - Se guardan en formato .zip (en la cubeta S3).
   - En un futuro exploraremos guardarlo en parquet.
   - Dentro de S3 se organizaran por fechas.
-6) ¿Los transformamos antes de guardarlos?
-  - No.
+
+**6) ¿Los transformamos antes de guardarlos?**
+  - Se considera relevante mantener los datos en el formato y estructura en que son provistos desde la fuente de las aerolíneas, de manera que podamos considerar en el *pipeline* del producto de datos la historicidad de los mismo en una cubeta de S3. Sin embargo, se contempla realizar trasnformaciones a los mismos en el proceso de carga hacia la base de datos de PostGreSQL.
 
 ## Descripción de étapas
 ### Extract
