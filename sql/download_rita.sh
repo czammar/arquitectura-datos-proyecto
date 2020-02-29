@@ -6,8 +6,9 @@ BASE_ZIP="On_Time_Reporting_Carrier_On_Time_Performance_1987_present_"
 
 ## Esto linea deberia ser dinamica cuando se ejecute periodicamente
 
-YEAR=2019
-MONTH=11
+# Ultima fecha de actualizacion de datos 12/2019
+YEAR=1987
+MONTH=10
 
 # Obtenemos el zip
 wget ${BASE_URL}${YEAR}"_"${MONTH}".zip"
