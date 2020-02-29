@@ -7,6 +7,8 @@ import luigi
 import luigi.contrib.s3
 import boto3
 import os
+import pyarrow
+import pyarrow.parquet as pq
 
 class LocalFileSystemTask(luigi.Task):
 #Parametros 
@@ -14,25 +16,24 @@ class LocalFileSystemTask(luigi.Task):
 
     def run(self):
         with self.output().open('w') as output_file:
-        	extract = exec(open('calling_bash.py').read())
-        	output_file.write(extract)
+        	extract = exec(open('download_rita_parquet.py').read())
+        	#output_file.open(extract)
         
 
 
     def output(self):
-        return luigi.local_target.LocalTarget('./On_Time_Reporting_Carrier_On_Time_Performance_(1987_present)_1987_10.csv')
+        return luigi.local_target.LocalTarget('./On_Time_Reporting.parquet')
 
 
 class S3Task(luigi.Task):
 
     #Parametros
-    task_name = "load"
+    #task_name = "load"
 
     bucket = luigi.Parameter()
-    root_path = luigi.Parameter()
-    etl_path = luigi.Parameter()
-    year = luigi.Parameter()
-    month = luigi.Parameter()
+    #root_path = luigi.Parameter()
+    #year = luigi.Parameter()
+    #month = luigi.Parameter()
 
     def requires(self):
         return LocalFileSystemTask(self)
@@ -45,17 +46,17 @@ class S3Task(luigi.Task):
         print(ses)
 
         with self.output().open('w') as output_file:
-            output_file.write("raw,luigi,s3")
+        	file =  pq.read_table('On_Time_Reporting.parquet')
+            #output_file.write("raw,luigi,s3")
 
 
     def output(self):
-        output_path = "s3://{}/{}/{}/{}/YEAR={}/MONTH={}/raw.csv".\
-        format(self.bucket,
-        self.root_path,
-        self.etl_path,
-        self.task_name,
-        self.year,
-        str(self.month))
+        output_path = "s3://{}/raw.csv".\
+        format(self.bucket)#,
+        #self.root_path,
+        #self.task_name,
+        #self.year,
+        #str(self.month))
 
         #return luigi.local_target.LocalTarget('/home/silil/Documents/itam/metodos_gran_escala/data-product-architecture/luigi/test.csv')
         return luigi.contrib.s3.S3Target(path=output_path)
