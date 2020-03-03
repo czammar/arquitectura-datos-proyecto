@@ -83,7 +83,7 @@ Para facilitar el entendimiento del proceso recién descrito, presentamos un dia
 
 EL hasta el momento
 
-![Diagrama de flujo del EL](images/el1.png?raw=true "Title")
+![Diagrama de flujo del EL](images/EL.png?raw=true "Title")
 
 ## 5. Implicaciones éticas del proyecto
 
