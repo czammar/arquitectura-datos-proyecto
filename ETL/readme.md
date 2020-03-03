@@ -81,6 +81,10 @@ Para facilitar el entendimiento del proceso recién descrito, presentamos un dia
 (https://drive.google.com/file/d/1aYgxZ5BnPjNXAMo6qNAPVHjWbP7cOrB9/view?usp=sharing)
 (https://www.draw.io/#G17QEIJYjJwGIPJViHqTRJg0UPf8I40m2j)
 
+EL hasta el momento
+
+![Diagrama de flujo del EL](images/el1.png?raw=true "Title")
+
 ## 5. Implicaciones éticas del proyecto
 
 Al respecto, se identifican posibles implicaciones éticas del producto de datos hasta aquí planteando:
