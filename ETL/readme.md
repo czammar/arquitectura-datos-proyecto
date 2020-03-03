@@ -4,8 +4,7 @@
 
 ## 1. Introducción
 
-Este documento tiene como objetivo de describir, a manera de *mock-up*, el ETL para la ingestión de los datos de RITA para el diseño
-de un producto de datos encaminado a predecir intervalos de retraso de los vuelo de los usuarios de aerolíneas en Estados Unidos.
+Este documento tiene como objetivo de describir, a manera de *mock-up*, el ETL para la ingestión de los datos de RITA para el diseño de un producto de datos encaminado a predecir intervalos de retraso de los vuelo de los usuarios de aerolíneas en Estados Unidos.
 
 Dicho proceso se realizará con base en una serie especificaciones que se plantearán, a manera de preguntas, y que serán las directrices de ésta etapa del proyecto, mismas que se exponen a continuación.
 
@@ -80,3 +79,19 @@ Para facilitar el entendimiento del proceso recién descrito, presentamos un dia
 
 ![Diagrama de flujo del ETL](images/etl2.png?raw=true "Title")
 (https://drive.google.com/file/d/1aYgxZ5BnPjNXAMo6qNAPVHjWbP7cOrB9/view?usp=sharing)
+
+## 5. Implicaciones éticas del proyecto
+
+Al respecto, se identifican posibles implicaciones éticas del producto de datos hasta aquí planteando:
+
+**Eje de usuarios:**
+
+* Hacer que pierdan vuelos y deban hacer doble gasto en un viaje,
+* Sesgar a que los usuarios viajen o no en una aerolínea,
+
+**Eje de aerolíneas:**
+
+* Perjudicar la reputación  de una aerolínea,
+* Proyectar la responsabilidad de eventos fuera de su control,
+* Dañar su estabilidad económica y empleos,
+* Aumentar quejas injustificadas del servicio.
