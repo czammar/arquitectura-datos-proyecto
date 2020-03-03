@@ -77,7 +77,7 @@ Uno o más de los siguientes tipos de transformación pueden ser necesarios para
 
 Para facilitar el entendimiento del proceso recién descrito, presentamos un diagrama que describe las actividades a realizar en cada una de las etapas del ETL.
 
-![Diagrama de flujo del ETL](images/etl2.png?raw=true "Title")
+![Diagrama de flujo del ETL](images/etl3.png?raw=true "Title")
 (https://drive.google.com/file/d/1aYgxZ5BnPjNXAMo6qNAPVHjWbP7cOrB9/view?usp=sharing)
 
 ## 5. Implicaciones éticas del proyecto
