@@ -31,5 +31,9 @@ En este sentido, para facilitar el entendimiento de los documentos y acciones de
 |---|-----------------------------------|--------|
 | 1 | Docs | Refiere la documentación de los pasos realizados para las diferentes etapas del proyecto. |
 | 2 | Diseño | Contiene un documento *mock-up* con de la conceptualización del proyecto a realizar. |
+| 3 | EDA | Análisis exploratorio preeliminar para identificar potenciales transformaciones. |
+| 4 | ETL | Primera versión del ETL, considerando la etapa de Luigi. |
+| 5 | sql | Contiene propuestas para hacer la carga a una base PostgreSQL de los datos desde csv. |
+
 
 **Nota:** La estructura del repositorio y su contenido se irá actualizando conforme el equipo avance en el desarrollo del multi-citado proyecto.
