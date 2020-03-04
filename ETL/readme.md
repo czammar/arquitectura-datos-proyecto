@@ -113,7 +113,7 @@ Al respecto, se identifican posibles implicaciones éticas del producto de datos
 Para correr el orquestador, se debe ejecutar la instrucción:
 
 ```
-PYTHONPATH='.' AWS_PROFILE=dpa luigi --module luigi_luis S3Task --local-scheduler
+PYTHONPATH='.' AWS_PROFILE=dpa luigi --module orquestador S3Task --local-scheduler
 ```
 
 **Notas**
