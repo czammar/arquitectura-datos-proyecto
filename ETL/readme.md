@@ -100,3 +100,28 @@ Al respecto, se identifican posibles implicaciones éticas del producto de datos
 * Proyectar la responsabilidad de eventos fuera de su control,
 * Dañar su estabilidad económica y empleos,
 * Aumentar quejas injustificadas del servicio.
+
+## 6. Contenido la carpeta
+
+| # | Carpeta                       | Descripción  |
+|---|-----------------------------------|--------|
+| 1 | download_rita_parquet.py | Archivo que extrae una fracción de los datos, para convertirla a formato .parquet |
+| 2 | luigi_luis.py | Programa que funge como o1rquestador |
+| 3 | prueba.py | Script que lista el contenido del bucket, junto con su peso. |
+| 4 | limpia_cubeta.py | Script que vacía el bucket que se ha subido a la cubeta |
+
+Para correr el orquestador, se debe ejecutar la instrucción:
+
+```
+PYTHONPATH='.' AWS_PROFILE=dpa luigi --module luigi_luis S3Task --local-scheduler
+```
+
+**Notas**
+
+* Para la correcta ejecución, se debe asegurar que se ha corrido el archivo *limpia_cubeta.py*, posteriormente correr el orquestador, y verificar el contenido con el script *prueba.py*
+* El archivo Bash es un script implementado para instalar un ambiente virtual de Python 3.7.3, denominado "rita" que posee las dependencias necesarias para el proceso recién descrito.
+
+
+Ello baja un fracción de los datos, para convertirlos a .parquet y subirlos al bucket. Además se debe considerar lo siguiente:
+
+
