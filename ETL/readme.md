@@ -109,6 +109,10 @@ Al respecto, se identifican posibles implicaciones éticas del producto de datos
 | 2 | orquestador.py | Programa que funge como orquestador |
 | 3 | prueba.py | Script que lista el contenido del bucket, junto con su peso. No forma parte del pipeline, solo se usa como acción ilustrativa para probar que al bucket se han cargado exitosamentente los datos. |
 | 4 | limpia_cubeta.py | Script que vacía el bucket que se ha subido a la cubeta; nuevamente no forma parte del pipeline, solo se emplea como una acción ilustrativa para enseñar en clase el corrector funcionamiento del orquestador |
+| 5 | rita_pyenv.sh | Script de Bash para descargar pyenv y pyenv virtualenv, de modo que sea posible crear un ambiente virtial denominado *Rita*, con todas las dependencias de Python necesarias para la ejecución de proyecto.  |
+
+
+
 
 Para correr el orquestador, se debe ejecutar la instrucción:
 
