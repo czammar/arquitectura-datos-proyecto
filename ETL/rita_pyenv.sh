@@ -21,13 +21,14 @@ pyenv install 3.7.3
 
 # Instalamos pyenv virtualenv y configuramos el .bashrc
 
-# Crea el ambiente virtual rita
-pyenv virtualenv 3.7.3 rita
+# Descargamos virtualenv
 git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
 exec "$SHELL"
 
 # Creamos ambiente virtual rita
 pyenv virtualenv 3.7.3 rita
 echo "rita" > .python-version # aparece (rita) a lado de la terminal
+# pyenv activate rita # En caso que no apareza
 
-pip install pandas luigi boto3 wget pyarrow requests # paquetes necesarios para nuestro luigi
+# Instalamos paquetes necesarios para Luigi
+pip install pandas luigi boto3 wget pyarrow requests 
