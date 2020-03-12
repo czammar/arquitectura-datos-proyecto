@@ -2,4 +2,8 @@
 FROM quay.io/python-devs/ci-image:latest
 
 # Instala diferentes librerias para al proyecto
-RUN pip3 install pandas luigi boto3 wget pyarrow requests
+USER runner
+WORKDIR /home/runner/
+
+RUN pip3 install pandas luigi boto3 wget requests
+RUN pip3 install pyarrow
