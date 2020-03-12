@@ -4,8 +4,7 @@
 
 ## 1. Introducción
 
-Este documento tiene como objetivo de describir, a manera de *mock-up*, el ETL para la ingestión de los datos de RITA para el diseño
-de un producto de datos encaminado a predecir intervalos de retraso de los vuelo de los usuarios de aerolíneas en Estados Unidos.
+Este documento tiene como objetivo de describir, a manera de *mock-up*, el ETL para la ingestión de los datos de RITA para el diseño de un producto de datos encaminado a predecir intervalos de retraso de los vuelo de los usuarios de aerolíneas en Estados Unidos.
 
 Dicho proceso se realizará con base en una serie especificaciones que se plantearán, a manera de preguntas, y que serán las directrices de ésta etapa del proyecto, mismas que se exponen a continuación.
 
@@ -78,5 +77,55 @@ Uno o más de los siguientes tipos de transformación pueden ser necesarios para
 
 Para facilitar el entendimiento del proceso recién descrito, presentamos un diagrama que describe las actividades a realizar en cada una de las etapas del ETL.
 
-![Diagrama de flujo del ETL](images/etl2.png?raw=true "Title")
+![Diagrama de flujo del ETL](images/etl3.png?raw=true "Title")
 (https://drive.google.com/file/d/1aYgxZ5BnPjNXAMo6qNAPVHjWbP7cOrB9/view?usp=sharing)
+(https://www.draw.io/#G17QEIJYjJwGIPJViHqTRJg0UPf8I40m2j)
+
+EL hasta el momento
+
+![Diagrama de flujo del EL](images/EL.png?raw=true "Title")
+
+## 5. Implicaciones éticas del proyecto
+
+Al respecto, se identifican posibles implicaciones éticas del producto de datos hasta aquí planteando:
+
+**Eje de usuarios:**
+
+* Hacer que pierdan vuelos y deban hacer doble gasto en un viaje,
+* Sesgar a que los usuarios viajen o no en una aerolínea,
+
+**Eje de aerolíneas:**
+
+* Perjudicar la reputación  de una aerolínea,
+* Proyectar la responsabilidad de eventos fuera de su control,
+* Dañar su estabilidad económica y empleos,
+* Aumentar quejas injustificadas del servicio.
+
+## 6. Contenido la carpeta
+
+| # | Carpeta                       | Descripción  |
+|---|-----------------------------------|--------|
+| 1 | download_rita_parquet.py | Archivo que extrae una fracción de los datos, para convertirla a formato .parquet |
+| 2 | orquestador.py | Programa que funge como orquestador |
+| 3 | prueba.py | Script que lista el contenido del bucket, junto con su peso. No forma parte del pipeline, solo se usa como acción ilustrativa para probar que al bucket se han cargado exitosamentente los datos. |
+| 4 | limpia_cubeta.py | Script que vacía el bucket que se ha subido a la cubeta; nuevamente no forma parte del pipeline, solo se emplea como una acción ilustrativa para enseñar en clase el corrector funcionamiento del orquestador |
+| 5 | rita_pyenv.sh | Script de Bash para descargar pyenv y pyenv virtualenv, de modo que sea posible crear un ambiente virtial denominado *Rita*, con todas las dependencias de Python necesarias para la ejecución de proyecto.  |
+
+
+
+
+Para correr el orquestador, se debe ejecutar la instrucción:
+
+```
+PYTHONPATH='.' AWS_PROFILE=dpa luigi --module orquestador S3Task --local-scheduler
+```
+
+**Notas**
+
+* Para la correcta ejecución, se debe asegurar que se ha corrido el archivo *limpia_cubeta.py*, posteriormente correr el orquestador, y verificar el contenido con el script *prueba.py*
+* El archivo Bash es un script implementado para instalar un ambiente virtual de Python 3.7.3, denominado "rita" que posee las dependencias necesarias para el proceso recién descrito.
+
+
+Ello baja un fracción de los datos, para convertirlos a .parquet y subirlos al bucket. Además se debe considerar lo siguiente:
+
+

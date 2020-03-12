@@ -10,17 +10,24 @@ import os
 import pyarrow
 import pyarrow.parquet as pq
 
-class LocalFileSystemTask(luigi.Task):
-#Parametros
+#importamos las librerias
+import requests
+import wget
+import zipfile
+#librerias para pasar a parquet
+import pandas as pd
+import pyarrow as pa
 
+
+class LocalFileSystemTask(luigi.Task):
 
     def run(self):
         with self.output().open('w') as output_file:
         	extract = exec(open('download_rita_parquet.py').read())
-        	#output_file.open(extract)
 
     def output(self):
-        return luigi.local_target.LocalTarget('./On_Time_Reporting.parquet')
+        return luigi.local_target.LocalTarget('On_Time_Reporting_Carrier_On_Time_Performance_(1987_present)_1987_10.csv')
+
 
 
 class S3Task(luigi.Task):
@@ -35,15 +42,15 @@ class S3Task(luigi.Task):
         ses = boto3.session.Session(profile_name='dpa', region_name='us-west-2')
         s3_resource = ses.resource('s3')
 
+        bucket_name = "test-aws-boto"
         obj = s3_resource.Bucket("test-aws-boto")
         print(ses)
 
-        #with self.output().open('w') as output_file:
-        	#file =  pq.read_table('On_Time_Reporting.parquet')
-            #output_file.write("raw,luigi,s3")
+        file_to_upload = 'On_Time_Reporting.parquet'
+        file_name = file_to_upload
 
-        with self.output().open('w') as output_file:
-            output_file.write("On_Time_Reporting,luigi,s3")
+        # accedemos a client desde el resource
+        s3_resource.meta.client.upload_file(file_to_upload, bucket_name, file_name)
 
 
     def output(self):
