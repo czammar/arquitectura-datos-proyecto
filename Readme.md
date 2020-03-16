@@ -34,7 +34,7 @@ En este sentido, para facilitar el entendimiento de los documentos y acciones de
 | 3 | EDA | Análisis exploratorio preeliminar para identificar potenciales transformaciones. |
 | 4 | ETL | Primera versión del ETL, considerando la etapa de Luigi. |
 | 5 | sql | Contiene propuestas para hacer la carga a una base PostgreSQL de los datos desde csv. |
-| 5 | Linaje | Presenta una serie de esquemas que describe tanto los metadatos que se recopilarán en las diferentes fases del proyecto, así como el linaje de los datos generados en cada una de dichas etapas. |
+| 6 | Linaje | Presenta una serie de esquemas que describe tanto los metadatos que se recopilarán en las diferentes fases del proyecto, así como el linaje de los datos generados en cada una de dichas etapas. |
 
 
 **Nota:** La estructura del repositorio y su contenido se irá actualizando conforme el equipo avance en el desarrollo del multi-citado proyecto.
