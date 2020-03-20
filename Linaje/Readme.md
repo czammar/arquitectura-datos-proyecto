@@ -1,4 +1,4 @@
-# Linaje de Datos
+# Linaje de Datos para la fase ETL
 
 A continuación se presenta una serie de esquemas que representan el linaje de datos que se piensa será de interés para el proyecto, hasta la fecha en que se elabora el presente documento.
 
@@ -15,20 +15,22 @@ Esta estapa se refiere a cuando se obtienen los datos crudos (*Raw*) desde el AP
 | tamano_zip       	| tamaño del zip                                                	|
 | nombre_archivo  	| nombre del archivo nuevo generado                              	|
 | ruta_s3         	| load ocurre en S3, ruta de almacenamiento incluyendo el bucket 	|
-| variables_datos 	| variables en el orden en que aparecen                          	|
+
 
 
 
 ## Etapa Pre-processed
 
-Corresponde a la etapa en que se realiza un pre-procesamiento de los datos obtenidos en la etapa previa.
+Corresponde a la etapa en que se realiza un pre-procesamiento de los datos obtenidos en la etapa previa. Básicamente este preprocesado es la descompresión del archivo, el cambio a formato CSV.
 
 | Nombre                    	| Función                                      	|
 |---------------------------	|----------------------------------------------	|
 | fecha                     	| fecha de ejecución                           	|
 | usuario                   	| quien ejecuto el task*                       	|
-| ejecucion                 	| cambio a csv, número de renglones           	|
-| ip_preprocesed             	| donse se ejecuto (S3)                        	|
+| ejecucion                 	| cambio a CSV                                 	|
+| num_observaciones_cargadas 	| número de registros cargados                	|
+| ip_preprocesed             	| dónde se ejecutó (S3)                        	|
+| variables_datos           	| variables en el orden en que aparecen        	|
 | status                    	| estatus de ejecución: Fallido, exitoso, etc. 	|
 
 ## Etapa Clean
@@ -43,4 +45,5 @@ En seguimiento a lo anterior, en esta etapa se realiza la limpieza de los datos 
 | ip_clean                   	| Corresponde a la dirección IP desde donde se ejecuto la tarea|
 | ejecucion                  	| imprimirá nombre de funciones del script de transform 	|
 | num_observaciones_cargadas 	| número de registros modificados                       	|
+| variables_limpias          	| variables finales con las que se realizará el modelado 	|
 | status                     	| estatus de ejecución: Fallido, exitoso, etc.          	|
