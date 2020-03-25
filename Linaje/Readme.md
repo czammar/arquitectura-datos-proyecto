@@ -9,6 +9,7 @@ Esta estapa se refiere a cuando se obtienen los datos crudos (*Raw*) desde el AP
 | Nombre            | Función                                           	            |
 |-----------------	|----------------------------------------------------------------	|
 | fecha            	| fecha de ejecución                                              |
+| nombre_task      	| nombre del task que se ejecuto                                	|
 | parametros      	| parámetros con los que se ejecuto el task                      	|
 | usuario         	| quien ejecuto el task*                                         	|
 | ip_ec2          	| Corresponde a la dirección IP desde donde se ejecuto la tarea  	|
@@ -27,6 +28,7 @@ Corresponde a la etapa en que se realiza un pre-procesamiento de los datos obten
 |---------------------------	|----------------------------------------------	|
 | fecha                     	| fecha de ejecución                           	|
 | usuario                   	| quien ejecuto el task*                       	|
+| nombre_task               	| nombre del task que se ejecuto                |
 | ejecucion                 	| cambio a CSV                                 	|
 | num_observaciones_cargadas 	| número de registros cargados                	|
 | ip_preprocesed             	| dónde se ejecutó (S3)                        	|
@@ -41,6 +43,7 @@ En seguimiento a lo anterior, en esta etapa se realiza la limpieza de los datos 
 |----------------------------	|-------------------------------------------------------	|
 | fecha                      	| fecha de ejecución                                    	|
 | usuario                    	| quien ejecuto el task*                                	|
+| nombre_task               	| nombre del task que se ejecuto                         	|
 | tipo_columna               	| tipo de datos en cada columna                         	|
 | ip_clean                   	| Corresponde a la dirección IP desde donde se ejecuto la tarea|
 | ejecucion                  	| imprimirá nombre de funciones del script de transform 	|

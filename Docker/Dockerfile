@@ -6,4 +6,9 @@ USER runner
 WORKDIR /home/runner/
 
 RUN pip3 install pandas luigi boto3 wget requests
-RUN pip3 install pyarrow
+#RUN pip3 install pyarrow
+RUN pip install csvkit
+
+# Copiamos archivos relevantes
+
+# COPY /home/user/.awscredentials .awscredentials
