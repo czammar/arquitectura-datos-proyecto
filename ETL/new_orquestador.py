@@ -67,7 +67,7 @@ class downloadDataS3(luigi.Task):
     month = luigi.Parameter()
 
     # Intentamos recoger parametros
-    MiLinaje.fecha = "Ya tengo hambre :("#luigi.Parameter().parse(year)# :D :D :D
+    MiLinaje.fecha = year# Pendiente
     MiLinaje.usuario = getpass.getuser()
     MiLinaje.to_upsert()
 
@@ -96,42 +96,24 @@ class downloadDataS3(luigi.Task):
 
         return luigi.contrib.s3.S3Target(path=output_path)
 
+class MetadataRaw(luigi.Task):
 
-class WritingCSVtoS3(luigi.Task):
+    def requires(self):
+        downloadDataS3()
 
-    #Parametros
-    task_name = "load"
-    #Definimos el mes y el anio base
-    year = luigi.Parameter()
-    month = luigi.Parameter()
-
-    #def requires(self):
-        #return downloadDataS3()
-
+        # Autenticación en S3
     def run(self):
+        # Se conecta a la base de datos
+        connection = psycopg2.connect(user="some_user", # Usuario RDS
+                                       password="some_password", # password de usuario de RDS
+                                       host="127.0.0.1", # cambiar por el endpoint adecuado
+                                       port="5432", # cambiar por el puerto
+                                       database="postgres_db") # Nombre de la base de datos
+        cursor = connection.cursor()
 
-        zip_key = "s3://test-aws-boto/YEAR="+str(self.year)+"/MONTH="+str(self.month)+"/"+str(self.year)+"_"+str(self.month)+".zip"
-
-        ses = boto3.session.Session(profile_name='dpa_Danahi_c', region_name='us-west-2')
-        s3_resource = ses.resource('s3')
-
-        bucket_name = "test-aws-boto"
-        obj = s3_resource.Bucket("test-aws-boto")
-        print(ses)
-
-        # hola
-        s3_resource = boto3.resource('s3')
-        zip_obj = s3_resource.Object(bucket_name=bucket_name, key=zip_key)
-        buffer = BytesIO(zip_obj.get()["Body"].read())
-
-        z = ZipFile(buffer)
-
-        zip_name="On_Time_Reporting_Carrier_On_Time_Performance_(1987_present)_"+str(self.year)+"_"+str(self.month)+".csv"
-
-        s3_resource.meta.client.upload_fileobj(z.open(zip_name), Bucket=bucket_name, Key=f'{zip_name}')
-
+        postgres_insert_query = """ INSERT INTO extract (fecha, nombre_task, parametros, usuario, ip_ec2, tamano_zip, nombre_archivo, ruta_s3) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"""
+        record_to_insert = MiLinaje.to_upsert() #(5, 'One Plus 6', 950, 'some_spec')
+        cursor.execute(postgres_insert_query, record_to_insert)
 
     def output(self):
-        output_path = "s3://test-aws-boto/YEAR="+str(self.year)+"/MONTH="+str(self.month)+"/"+str(self.year)+"_"+str(self.month)+".zip"
-
-        return luigi.contrib.s3.S3Target(path=output_path)
+        return #escribe a rds
