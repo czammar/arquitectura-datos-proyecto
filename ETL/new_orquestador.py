@@ -67,11 +67,12 @@ class downloadDataS3(luigi.Task):
     month = luigi.Parameter()
 
     # Intentamos recoger parametros
-    MiLinaje.fecha = year# Pendiente
-    MiLinaje.usuario = getpass.getuser()
-    MiLinaje.to_upsert()
 
     def run(self):
+        MiLinaje.fecha = str(self.year)# Pendiente
+        MiLinaje.usuario = getpass.getuser()
+        MiLinaje.to_upsert()
+
         # Autenticación en S3
         ses = boto3.session.Session(profile_name='dpa_Danahi_c', region_name='us-west-2')
         s3_resource = ses.resource('s3')
