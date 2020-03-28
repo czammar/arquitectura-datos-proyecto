@@ -10,7 +10,7 @@ import time
 import os
 
 # GLOBALS
-os.environ['AWS_PROFILE'] = "dpa"
+os.environ['AWS_PROFILE'] = "dpa_Danahi_c"
 os.environ['AWS_DEFAULT_REGION'] = "us-west-2"
 boto_config = Config(retries=dict(max_attempts=20))
 rds_client = boto3.client('rds',config=boto_config, region_name='us-west-2')
@@ -41,7 +41,7 @@ def create_db(nuevo_id):
              "DBInstanceClass":'db.t2.micro',
              "Engine":'postgres',
              "AllocatedStorage":5,
-             "port":5432
+             "Port":5432
         }
         rds_client.create_db_instance(**db_vars)
     except Exception as error:
@@ -57,9 +57,9 @@ def delete_db(id_borrar):
         print (error)
 
 # MAIN
-describe_db()
-#create_db("metadatos")
-delete_db('metadatos')
+#describe_db()
+#create_db('metadatos')
+#delete_db('metadatos')
 describe_db()
 #create_db()
 #describe_db()
