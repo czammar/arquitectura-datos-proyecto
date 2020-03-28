@@ -3,7 +3,7 @@
 # existe un bug con bot3 y luigi para pasar las credenciales
 # necesitas enviar el parametro AWS_PROFILE e indicar el profile
 # con el que quieres que se corra
-# PYTHONPATH='.' AWS_PROFILE=dpa_Danahi_c luigi --module new_orquestador downloadDataS3 --local-scheduler --year 1988 --month 11
+# PYTHONPATH='.' AWS_PROFILE=dpa luigi --module new_orquestador downloadDataS3 --local-scheduler --year 1988 --month 11
 import luigi
 import luigi.contrib.s3
 from luigi import Event, Task, build # Utilidades para acciones tras un task exitoso o fallido
@@ -23,7 +23,7 @@ usuario = getpass.getuser() # Obtenemos el usuario
 #print(usuario)
 
 def create_bucket():
-    ses = boto3.session.Session(profile_name='dpa_Danahi_c', region_name='us-west-2')
+    ses = boto3.session.Session(profile_name='dpa', region_name='us-west-2')
     s3_resource = ses.resource('s3')
 
 
@@ -83,8 +83,9 @@ class downloadDataS3(luigi.Task):
 
 
         # Autenticación en S3
-        ses = boto3.session.Session(profile_name='dpa_Danahi_c', region_name='us-west-2')
+        ses = boto3.session.Session(profile_name='dpa', region_name='us-west-2')
         s3_resource = ses.resource('s3')
+
 
         ec2 = ses.client('ec2')
         MiLinaje.ip_ec2 = ec2.describe_addresses(Filters=[{'Name': 'domain','Values': ['standard']}])
@@ -122,7 +123,7 @@ def on_success(self):
     MiLinaje.task_status = "Successful"
 
     # Escribimos el tamano del archivo recien escrito
-    ses = boto3.session.Session(profile_name="dpa_Danahi_c", region_name='us-west-2')
+    ses = boto3.session.Session(profile_name="dpa", region_name='us-west-2')
     s3 = ses.resource('s3')
     bucket_name = "test-aws-boto"
     my_bucket = s3.Bucket(bucket_name)
