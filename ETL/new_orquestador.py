@@ -121,7 +121,8 @@ def on_success(self):
     # Escribimos el tamano del archivo recien escrito
     ses = boto3.session.Session(profile_name="dpa_Danahi_c", region_name='us-west-2')
     s3 = ses.resource('s3')
-    my_bucket = s3.Bucket(bucket_name )
+    bucket_name = "test-aws-boto"
+    my_bucket = s3.Bucket(bucket_name)
 
     MiLinaje.tamano_zip = my_bucket.Object(key=MiLinaje.ruta_s3+MiLinaje.nombre_archivo).content_length
     MiLinaje.to_upsert()
