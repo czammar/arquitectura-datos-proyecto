@@ -86,6 +86,9 @@ class downloadDataS3(luigi.Task):
         ses = boto3.session.Session(profile_name='dpa_Danahi_c', region_name='us-west-2')
         s3_resource = ses.resource('s3')
 
+        ec2 = ses.client('ec2')
+        MiLinaje.ip_ec2 = ec2.describe_addresses(Filters=[{'Name': 'domain','Values': ['standard']}])
+
         obj = s3_resource.Bucket("test-aws-boto")
         print(ses)
 
