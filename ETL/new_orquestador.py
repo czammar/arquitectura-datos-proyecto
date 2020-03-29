@@ -10,6 +10,8 @@ from luigi import Event, Task, build # Utilidades para acciones tras un task ex
 import boto3
 import getpass # Usada para obtener el usuario
 from datetime import date, datetime
+import psycopg2
+from psycopg2 import extras
 
 #importamos las librerias
 import requests
@@ -54,7 +56,7 @@ class Linaje_raw():
         self.task_status= task_status
 
     def to_upsert(self):
-        print (self.fecha, self.nombre_task, self.parametros, self.usuario, self.ip_ec2, self.tamano_zip, self.nombre_archivo, self.ruta_s3, self.task_status)
+        return (self.fecha, self.nombre_task, self.parametros, self.usuario, self.ip_ec2, self.tamano_zip, self.nombre_archivo, self.ruta_s3, self.task_status)
 
 # Inicializamos
 MiLinaje = Linaje_raw()
@@ -78,9 +80,7 @@ class downloadDataS3(luigi.Task):
 
 
     def run(self):
-        MiLinaje.parametros = dict({'Year':str(self.year),'Month':str(self.month)})
-        MiLinaje.ip_ec2 = 0 # Pendiente
-
+        MiLinaje.parametros = 'Year='+str(self.year)+'-'+'Month='+str(self.month)
 
         # Autenticación en S3
         ses = boto3.session.Session(profile_name='dpa', region_name='us-west-2')
@@ -129,33 +129,31 @@ def on_success(self):
     my_bucket = s3.Bucket(bucket_name)
 
     MiLinaje.tamano_zip = my_bucket.Object(key=MiLinaje.ruta_s3+MiLinaje.nombre_archivo).content_length
-    MiLinaje.to_upsert()
+
+
+    import psycopg2
+
+    host="rita-db.clx22b04cf2j.us-west-2.rds.amazonaws.com"
+
+    connection = psycopg2.connect(user="postgres", # Usuario RDS
+                                  password="i8cOE6l7bntarIEWfxAu", # password de usuario de RDS
+                                  host=host,#"127.0.0.1", # cambiar por el endpoint adecuado
+                                  port="5432", # cambiar por el puerto
+                                  database="postgres") # Nombre de la base de datos
+
+
+    cursor = connection.cursor()
+    postgres_insert_query = """ INSERT INTO metadatos.extract (fecha, nombre_task, parametros, usuario, ip_ec2, tamano_zip, nombre_archivo, ruta_s3, task_status) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s ) """
+    record_to_insert = MiLinaje.to_upsert() #(5, 'One Plus 6', 950, 'some_spec')
+    cursor.execute(postgres_insert_query, record_to_insert)
+    connection .commit()
+    cursor.close()
+    connection.close()
+    print("PostgreSQL connection is closed")
+
 
 @downloadDataS3.event_handler(Event.FAILURE)
 def on_failure(self):
     MiLinaje.tamano_zip = "Failure"
     MiLinaje.task_status = "Unknown"
     MiLinaje.to_upsert()
-
-
-class MetadataRaw(luigi.Task):
-
-    def requires(self):
-        downloadDataS3()
-
-        # Autenticación en S3
-    def run(self):
-        # Se conecta a la base de datos
-        connection = psycopg2.connect(user="some_user", # Usuario RDS
-                                       password="some_password", # password de usuario de RDS
-                                       host="127.0.0.1", # cambiar por el endpoint adecuado
-                                       port="5432", # cambiar por el puerto
-                                       database="postgres_db") # Nombre de la base de datos
-        cursor = connection.cursor()
-
-        postgres_insert_query = """ INSERT INTO extract (fecha, nombre_task, parametros, usuario, ip_ec2, tamano_zip, nombre_archivo, ruta_s3) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"""
-        record_to_insert = MiLinaje.to_upsert() #(5, 'One Plus 6', 950, 'some_spec')
-        cursor.execute(postgres_insert_query, record_to_insert)
-
-    def output(self):
-        return #escribe a rds
