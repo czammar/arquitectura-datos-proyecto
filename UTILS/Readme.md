@@ -15,6 +15,7 @@ apt-get update && apt-get install wget
 wget https://raw.githubusercontent.com/czammar/arquitectura-datos-proyecto/master/UTILS/rita.sh
 chmod +x rita.sh # en caso de que necesite permisos de ejecucion
 bash rita.sh # ejecutamos el script recien creado
+source ~/.bashrc
 ```
 
 
