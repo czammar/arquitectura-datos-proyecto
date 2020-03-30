@@ -11,12 +11,9 @@ Este script instala pyenv y pyenv-virtualenv para crear un ambiente virtual dond
 ******
 
 ```bash
-apt-get update && apt-get install nano
-
-nano rita.sh # Copiar el contenido de este file rita.sh y salvalo (ctrl +v, ctrl +o, crtl +x)
-
-chmod +x rita.sh # Permisos de ejecucion
-
+apt-get update && apt-get install wget
+wget https://raw.githubusercontent.com/czammar/arquitectura-datos-proyecto/master/UTILS/rita.sh
+chmod +x rita.sh # en caso de que necesite permisos de ejecucion
 bash rita.sh # ejecutamos el script recien creado
 ```
 
@@ -33,11 +30,8 @@ Este script instala python 3.7.3 en pyenv, y crea un ambiente virtual llamda *ri
 ******
 
 ```bash
-
-nano rita2.sh # Copiar el contenido de este file rita.sh y salvalo (ctrl +v, ctrl +o, crtl +x)
-
-chmod +x rita2.sh # Permisos de ejecucion
-
+wget https://raw.githubusercontent.com/czammar/arquitectura-datos-proyecto/master/UTILS/rita2.sh
+chmod +x rita2.sh # en caso de que necesite permisos de ejecucion
 bash rita2.sh # ejecutamos el script recien creado
 ```
 
