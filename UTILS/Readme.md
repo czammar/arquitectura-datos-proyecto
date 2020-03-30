@@ -46,16 +46,16 @@ Ingresar a la carpeta del repositorio, dentro de la instancia, esto deberia acti
 cd ~/arquitectura-datos-proyecto/ETL #
 ```
 
-Instrucciones para activar a desactivar el ambiente de manera manual
-
-```bash
-pyenv activate rita # activa el ambiente virtual rita
-pyenv deactivate rita # desactiva el ambiente virtual rita
-```
-
 Si algun paquete falta, basta user el siguiente comando dentro de este ambiente virtual o investigar en internet
 
 ```bash
 pip3 install nombre_paquete
+```
+
+**Nota:** En caso de que el amnbiente virtual no se active solo, estas son las instrucciones para activar a desactivar el ambiente de manera manual
+
+```bash
+pyenv activate rita # activa el ambiente virtual rita
+pyenv deactivate rita # desactiva el ambiente virtual rita
 ```
 
