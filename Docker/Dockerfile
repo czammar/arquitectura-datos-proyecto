@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
             python3-dev \
             python3-pip \
             python3-setuptools \
-            libpq-dev && pip3 install --upgrade pip  && pip3 install awscli --upgrade \
+            libpq-dev && pip3 install --upgrade pip  && pip3 install awscli --upgrade
 
 # Creamos al usuario rita
 RUN groupadd rita
