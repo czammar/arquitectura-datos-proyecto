@@ -21,3 +21,7 @@ RUN echo 'rita:rita' | chpasswd
 
 # Instalamos paquetes necesarios para el proyecto
 RUN pip3 install pandas luigi boto3 wget pyarrow requests Psycopg2 datetime
+
+# Instala diferentes librerias para al proyecto
+USER rita
+WORKDIR /home/rita/
