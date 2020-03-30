@@ -1,3 +1,4 @@
+#! /bin/bash
 # Script para descargar pyenv y virtualenv, para crear ambiente donde se corre luigi
 
 ## Instrucciones:
@@ -5,36 +6,43 @@
 # nano rita.sh # Copia el contenido de este file y salvalo (ctrl +v, ctrl +o, crtl +x)
 # chmod +x rita.sh # Permisos de ejecucion
 # bash rita.sh
+# Nota: en cierta para de la compilacion hay que introducir datos de zona horaria
+# en un menu interactivo, dar 2 y luego 97
 
 # Despues de correrlo, en la terminal correr
-# exec "$SHELL"
-# pyenv activate rita # activa el ambiente virtual
-# pip3 install nombre-paquete # instala paquete nombre-paquete que haga falta
+# source ~/.bashrc
 
 apt update
 #sudo apt update
 # Instalamos librerias necesarias para pyenv y otras utilidades
-apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
-#sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
-apt-get install -y  libpq-dev # libreria para instalar Pyscopg2
-#sudo apt-get install -y  libpq-dev # libreria para instalar Pyscopg2
 
-# Instalamos pyenv y configuramos el .bashrc
-git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev\
+ libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev\
+  xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+#sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev\
+ #libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev\
+  #xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+cd ~
+
+apt-get install -y  libpq-dev
+
+
+curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+
+echo '********* Iniciamos modificacion del bashrc ************'
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+#source ~/.bashrc
+#echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+#echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
+
 echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
 echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
-#exec "$SHELL" # reinicia la consola
-
-# Instalamos pyenv virtualenv y configuramos el .bashrc
-git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
 echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
-#exec "$SHELL" # reinicia la consola
+#source ~/.bashrc
+#source ~/.bashrc
+#exec "$SHELL"
+#echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
+#source ~/.bashrc
+#exec "$SHELL"
 
-# Creamos ambiente virtual rita
-pyenv install 3.7.3 # Instala esta version de Python (se puede modificar)
-pyenv virtualenv 3.7.3 rita # Crea ambiente virtual "rita" con la version de Python previa
-echo "rita" > .python-version # aparece (rita) a lado de la terminal
-
-pyenv activate rita # activa el ambiente virtual "rita"
-pip3 install pandas luigi boto3 wget pyarrow requests Psycopg2 datetime
+echo '********* Final de modificacion del bashrc +************'
