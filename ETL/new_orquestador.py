@@ -28,8 +28,6 @@ def create_bucket():
     ses = boto3.session.Session(profile_name='dpa', region_name='us-west-2')
     s3_resource = ses.resource('s3')
 
-
-
     bucket_name = "test-aws-boto"
 
     s3_resource.create_bucket(Bucket=bucket_name,
@@ -41,8 +39,6 @@ def create_bucket():
 
 
 # Preparamamos una clase para reunir los metadatos de la etapa Raw
-
-
 class Linaje_raw():
     def __init__(self, fecha=0, parametros=0, usuario=0, ip_ec2=0, tamano_zip=0, nombre_archivo=0, ruta_s3=0,task_status=0):
         self.fecha = fecha # time stamp
@@ -58,11 +54,8 @@ class Linaje_raw():
     def to_upsert(self):
         return (self.fecha, self.nombre_task, self.parametros, self.usuario, self.ip_ec2, self.tamano_zip, self.nombre_archivo, self.ruta_s3, self.task_status)
 
-# Inicializamos
+# Inicializamos la clase que reune los metadatos
 MiLinaje = Linaje_raw()
-
-#MiLinaje.to_upsert()
-
 
 
 class downloadDataS3(luigi.Task):
@@ -77,8 +70,6 @@ class downloadDataS3(luigi.Task):
     MiLinaje.fecha =  datetime.now()
     MiLinaje.usuario = getpass.getuser()
 
-
-
     def run(self):
         MiLinaje.parametros = 'Year='+str(self.year)+'-'+'Month='+str(self.month)
 
@@ -86,9 +77,8 @@ class downloadDataS3(luigi.Task):
         ses = boto3.session.Session(profile_name='dpa', region_name='us-west-2')
         s3_resource = ses.resource('s3')
 
-
         ec2 = ses.client('ec2')
-        MiLinaje.ip_ec2 = ec2.describe_addresses(Filters=[{'Name': 'domain','Values': ['standard']}])
+        MiLinaje.ip_ec2 = 1#ec2.describe_addresses(Filters=[{'Name': 'domain','Values': ['standard']}])
 
         obj = s3_resource.Bucket("test-aws-boto")
         print(ses)
