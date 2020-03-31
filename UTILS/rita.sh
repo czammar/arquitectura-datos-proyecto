@@ -24,7 +24,7 @@ sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev\
   #xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
 cd ~
 
-sudo apt-get install -y  libpq-dev
+sudo apt-get install -y libpq-dev postgresql postgresql-contrib # Librerias para postgreSQL y psql
 
 
 sudo curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
