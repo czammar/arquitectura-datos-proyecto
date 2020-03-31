@@ -20,4 +20,4 @@ cd arquitectura-datos-proyecto/ETL
 echo "rita" > .python-version # aparece (rita) a lado de la terminal
 
 #pyenv activate rita # activa el ambiente virtual "rita"
-pip3 install pandas luigi boto3 wget pyarrow requests Psycopg2 datetime
+pip3 install pandas luigi boto3 wget pyarrow requests Psycopg2 datetime publicip
