@@ -79,7 +79,7 @@ class downloadDataS3(luigi.Task):
         s3_resource = ses.resource('s3')
 
         ec2 = ses.client('ec2')
-        MiLinaje.ip_ec2 = publicip.get()#ec2.describe_addresses(Filters=[{'Name': 'domain','Values': ['standard']}])
+        MiLinaje.ip_ec2 = publicip.get() #ec2.describe_addresses(Filters=[{'Name': 'domain','Values': ['standard']}])
 
         obj = s3_resource.Bucket("test-aws-boto")
         print(ses)
