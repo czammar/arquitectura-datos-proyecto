@@ -4,7 +4,7 @@ CREATE SCHEMA IF NOT EXISTS metadatos;
 ---- EXTRACT
 DROP TABLE IF EXISTS metadatos.extract;
 
-CREATE TABLE RAW.EXTRACT(
+CREATE TABLE metadatos.extract(
   fecha TEXT,
   nombre_task TEXT,
   parametros TEXT,
