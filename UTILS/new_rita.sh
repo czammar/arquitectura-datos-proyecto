@@ -2,7 +2,6 @@
 # Script para descargar pyenv y virtualenv, para crear ambiente donde se corre luigi
 
 sudo apt update
-
 # Instalamos librerias necesarias para pyenv y otras utilidades
 
 sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev\
@@ -13,7 +12,7 @@ cd ~
 
 sudo apt-get install -y libpq-dev postgresql postgresql-contrib # Librerias para postgreSQL y psql
 
-# Instalador de pyenv
+# Pyenv y virtualenv
 sudo curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
 
 echo '********* Iniciamos modificacion del bashrc ************'

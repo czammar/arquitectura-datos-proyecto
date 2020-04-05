@@ -1,14 +1,4 @@
 #! /bin/bash
-# Script para descargar pyenv y virtualenv, para crear ambiente donde se corre luigi
-
-## Instrucciones:
-# apt-get update && apt-get install nano
-# nano rita2.sh # Copia el contenido de este file y salvalo (ctrl +v, ctrl +o, crtl +x)
-# chmod +x rita2.sh # Permisos de ejecucion
-# bash rita2.sh
-
-# Despues de correrlo, en la terminal correr
-# cd proyecto
 
 # Creamos ambiente virtual rita
 cd ~
