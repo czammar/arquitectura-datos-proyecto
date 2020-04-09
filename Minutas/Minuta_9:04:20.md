@@ -20,7 +20,7 @@ Estructura Pao *20 abril
 - Modificar estructura de carpetas
 - Ajustar Dockerfile
 
-| 10 	| Actualizar Readme           	| Cesar y Leo          	| 22 noche    	|
+10. Actualizar Readme -Cesar y Leon *22 abril noche 
 
 
 Entrega: *28 abril
