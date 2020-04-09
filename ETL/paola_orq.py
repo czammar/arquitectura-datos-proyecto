@@ -71,13 +71,7 @@ class downloadDataS3(luigi.Task):
 
     def run(self):
 
-        # Recolectamos parametros de mes y anio de solicitud descarga a API Rita para metadatos
-        MiLinaje.year = str(self.year)
-        MiLinaje.month = str(self.month)
-
-        # Recolectamos IP para metadatos
-        MiLinaje.ip_ec2 = str(socket.gethostbyname(socket.gethostname()))
-
+        ## Escribimos en S3
         # Autenticación en S3
         ses = boto3.session.Session(profile_name='dpa', region_name='us-west-2')
         s3_resource = ses.resource('s3')
@@ -89,9 +83,17 @@ class downloadDataS3(luigi.Task):
         r=requests.get(url_act)
         data=r.content # resultado de la peticion a la API de Rita, en binario
 
+        ## Metadatos
         # Escribimos el archivo al bucket, usando el binario
         output_path = "RITA/YEAR="+str(self.year)+"/"+str(self.year)+"_"+str(self.month)+".zip"
         obj.put_object(Key=output_path,Body=r.content)
+
+        # Recolectamos parametros de mes y anio de solicitud descarga a API Rita para metadatos
+        MiLinaje.year = str(self.year)
+        MiLinaje.month = str(self.month)
+
+        # Recolectamos IP para metadatos
+        MiLinaje.ip_ec2 = str(socket.gethostbyname(socket.gethostname()))
 
         # Recolectamos nombre del .zip y path con el que se guardara consulta a
         # API de Rita en S3 para metadatos
@@ -103,7 +105,6 @@ class downloadDataS3(luigi.Task):
         s3 = ses.resource('s3')
         bucket_name = "test-aws-boto"
         my_bucket = s3.Bucket(bucket_name)
-
         MiLinaje.tamano_zip = my_bucket.Object(key=MiLinaje.ruta_s3+MiLinaje.nombre_archivo).content_length
 
         # Cambiamos status del task a exitoso
