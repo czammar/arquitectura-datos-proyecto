@@ -76,7 +76,8 @@ class downloadDataS3(luigi.Task):
     def run(self):
 
         # Recolectamos parametros de mes y anio de solicitud descarga a API Rita para metadatos
-        MiLinaje.parametros = 'Year='+str(self.year)+'-'+'Month='+str(self.month)
+        MiLinaje.year = str(self.year)
+        MiLinaje.month = str(self.month)
 
         # Recolectamos IP para metadatos
         MiLinaje.ip_ec2 = str(socket.gethostbyname(socket.gethostname()))

@@ -26,7 +26,8 @@ class InsertExtractMetada(CopyToTable):
     # Estructura de las columnas que integran la tabla (ver esquema)
     columns = [("fecha", "VARCHAR"),\
             ("nombre_task", "VARCHAR"),\
-            ("parametros","VARCHAR"),\
+            ("year","VARCHAR"),\
+            ("month","VARCHAR"),\
             ("usuario","VARCHAR"),\
             ("ip_ec2","VARCHAR"),\
             ("tamano_zip","VARCHAR"),\

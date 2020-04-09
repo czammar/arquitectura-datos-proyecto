@@ -5,15 +5,16 @@ CREATE SCHEMA IF NOT EXISTS metadatos;
 DROP TABLE IF EXISTS metadatos.extract;
 
 CREATE TABLE metadatos.extract(
-  fecha TEXT,
-  nombre_task TEXT,
-  parametros TEXT,
-  usuario TEXT,
-  ip_ec2 TEXT,
-  tamano_zip TEXT,
-  nombre_archivo TEXT,
-  ruta_s3 TEXT,
-  task_status TEXT
+  fecha VARCHAR,
+  nombre_task VARCHAR,
+  year VARCHAR,
+  month VARCHAR,
+  usuario VARCHAR,
+  ip_ec2 VARCHAR,
+  tamano_zip VARCHAR,
+  nombre_archivo VARCHAR,
+  ruta_s3 VARCHAR,
+  task_status VARCHAR
 );
 
 
