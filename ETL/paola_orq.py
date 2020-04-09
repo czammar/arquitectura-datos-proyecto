@@ -1,7 +1,3 @@
-#! /Users/czammar/opt/anaconda3/bin/python
-# existe un bug con bot3 y luigi para pasar las credenciales
-# necesitas enviar el parametro AWS_PROFILE e indicar el profile
-# con el que quieres que se corra
 # PYTHONPATH='.' AWS_PROFILE=dpa luigi --module new_orquestador downloadDataS3 --local-scheduler --year 1988 --month 11
 import luigi
 import luigi.contrib.s3
@@ -116,88 +112,13 @@ class downloadDataS3(luigi.Task):
         # Insertamos metadatos a DB
         #InsertExtractMetada()
 
-        # Conexion a BD y query para verificacion
-
-        # import psycopg2
-        #
-        # # Lectura de archivo de credenciales en directorio (no subirlo a git)
-        # credentials = pd.read_csv("postgres_credentials.csv")
-        # user = credentials.user[0]
-        # password = credentials.password[0]
-        # database = credentials.database[0]
-        # host = credentials.host[0]
-        #
-        # # Conexion y cursor para query
-        # connection = psycopg2.connect(user=user, # Usuario RDS
-        #                              password=password, # password de usuario de RDS
-        #                              host=host,# endpoint
-        #                              port="5432", # cambiar por el puerto
-        #                              database=database) # Nombre de la base de datos
-        # cursor = connection.cursor()
-        #
-        # # Query para verificacion a la base de datos
-        # postgreSQL_select_Query = "select * from metadatos.extract where task_status = '" + str(url_act) + "';"
-        # cursor.execute(postgreSQL_select_Query)
-        #
-        # print("Query de verificacion")
-        # select_Query = cursor.fetchall()
-        # tam = len(select_Query)
-        # cursor.close()
-        # connection.close()
-        # print("PostgreSQL connection is closed")
-        #
-        # if tam == 0:
-        #     MiLinaje.url = url_act
-        # else:
-        #     MiLinaje.url = "MALO"
-
     def output(self):
         # Ruta en donde se guarda el archivo solicitado
         output_path = "s3://test-aws-boto/RITA/"+"YEAR="+str(self.year)+"/"+str(self.year)+"_"+str(self.month)+".zip"
-         #s3://test-aws-boto/YEAR="+str(self.year)+"/MONTH="+str(self.month)+"/"+str(self.year)+"_"+str(self.month)+".zip"
         return luigi.contrib.s3.S3Target(path=output_path)#luigi.contrib.s3.S3Target(path=output_path)
 
  # Decoradores para escribir el status del task
-# @downloadDataS3.event_handler(Event.SUCCESS)
-# def on_success(self):
-#     if MiLinaje.url != "MALO":
-#     # Cambiamos statius del task a exitoso
-#         MiLinaje.task_status = MiLinaje.url
-#     # Escribimos el tamano del archivo recien escrito
-#         ses = boto3.session.Session(profile_name="dpa", region_name='us-west-2')
-#         s3 = ses.resource('s3')
-#         bucket_name = "test-aws-boto"
-#         my_bucket = s3.Bucket(bucket_name)
-#
-#         MiLinaje.tamano_zip = my_bucket.Object(key=MiLinaje.ruta_s3+MiLinaje.nombre_archivo).content_length
-#
-#         import psycopg2
-#
-#         # Lectura de archivo de credenciales en directorio (no subirlo a git)
-#         credentials = pd.read_csv("postgres_credentials.csv")
-#         user = credentials.user[0]
-#         password = credentials.password[0]
-#         database = credentials.database[0]
-#         host = credentials.host[0]
-#
-#         # Conexion y cursor para query
-#         connection = psycopg2.connect(user=user, # Usuario RDS
-#                                      password=password, # password de usuario de RDS
-#                                      host=host,# endpoint
-#                                      port="5432", # cambiar por el puerto
-#                                      database=database) # Nombre de la base de datos
-#         cursor = connection.cursor()
-#
-#         postgres_insert_query = """ INSERT INTO metadatos.extract (fecha, nombre_task, parametros, usuario, ip_ec2, tamano_zip, nombre_archivo, ruta_s3, task_status) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s ) """
-#         record_to_insert = MiLinaje.to_upsert() #(5, 'One Plus 6', 950, 'some_spec')
-#         cursor.execute(postgres_insert_query, record_to_insert)
-#         connection .commit()
-#         cursor.close()
-#         connection.close()
-#         print("PostgreSQL connection is closed")
-#
-#
 @downloadDataS3.event_handler(Event.FAILURE)
  def on_failure(self):
      MiLinaje.tamano_zip = "Failure"
-     MiLinaje.task_status = "Unknown"
+     InsertExtractMetada()
