@@ -31,8 +31,6 @@ def create_bucket():
 
 #create_bucket():
 
-
-
 # Preparamamos una clase para reunir los metadatos de la etapa Raw
 class Linaje_raw():
     def __init__(self, url = 0, fecha=0, year=0, month=0, usuario=0, ip_ec2=0, tamano_zip=0, nombre_archivo=0, ruta_s3=0,task_status=0):
@@ -71,8 +69,13 @@ class downloadDataS3(luigi.Task):
 
     def run(self):
 
-        ## Escribimos en S3
-        # Autenticación en S3
+        # Recolectamos parametros de mes y anio de solicitud descarga a API Rita para metadatos
+        MiLinaje.year = str(self.year)
+        MiLinaje.month = str(self.month)
+
+        ## Escribimos los archivos que se consultan al API Rita en S3
+
+        # Autenticación en S3 con boto3
         ses = boto3.session.Session(profile_name='dpa', region_name='us-west-2')
         s3_resource = ses.resource('s3')
         obj = s3_resource.Bucket("test-aws-boto")
@@ -83,14 +86,9 @@ class downloadDataS3(luigi.Task):
         r=requests.get(url_act)
         data=r.content # resultado de la peticion a la API de Rita, en binario
 
-        ## Metadatos
         # Escribimos el archivo al bucket, usando el binario
         output_path = "RITA/YEAR="+str(self.year)+"/"+str(self.year)+"_"+str(self.month)+".zip"
-        obj.put_object(Key=output_path,Body=r.content)
-
-        # Recolectamos parametros de mes y anio de solicitud descarga a API Rita para metadatos
-        MiLinaje.year = str(self.year)
-        MiLinaje.month = str(self.month)
+        obj.put_object(Key=output_path,Body=r.content)`
 
         # Recolectamos IP para metadatos
         MiLinaje.ip_ec2 = str(socket.gethostbyname(socket.gethostname()))
@@ -118,8 +116,12 @@ class downloadDataS3(luigi.Task):
         output_path = "s3://test-aws-boto/RITA/"+"YEAR="+str(self.year)+"/"+str(self.year)+"_"+str(self.month)+".zip"
         return luigi.contrib.s3.S3Target(path=output_path)#luigi.contrib.s3.S3Target(path=output_path)
 
- # Decoradores para escribir el status del task
+ # Decoradores para escribir el status del task en caso de falla
 @downloadDataS3.event_handler(Event.FAILURE)
  def on_failure(self):
-     MiLinaje.tamano_zip = "Failure"
+     # Cambios metadatos en caso de falla
+     MiLinaje.status = "Failure"
+     MiLinaje.tamano_zip = "?"
+
+     # Insertamos metadatos a DB
      InsertExtractMetada()
