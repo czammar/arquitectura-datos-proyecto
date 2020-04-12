@@ -7,3 +7,7 @@
 | 2015 | 5,819,079 | 79.92% | 18.28% | 1.54% | 0.26% |
 | 2014 | 5,819,811 | 76.25% | 21.32% | 2.18% | 0.25% |
 
+*El pocrntaje de vuelos retrasados inscluye los retrasos por clima, retrasos de seguridad, retraso de la aerolinea, retraso del Sustema Nacional de Aviación y retraso de llegada.
+
+Podemos ver que los porcentajes se comportan de manera similar en los años, sin embargo, podemos notar que a partir del año 2018 el número de vuelos aumentío en más de de 1.5 millones de vuelos.
+
