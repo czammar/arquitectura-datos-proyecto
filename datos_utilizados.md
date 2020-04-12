@@ -1,3 +1,5 @@
+En la siguiente tabla mostramos el número de vuelo y porcentajes que nos interesa para nuestro modelo.
+
 | Año | Número de vuelos | % Vuelos a tiempo | % Vuelos retrasados* | % Vuelos cancelados | % Vuelos desviados |
 |-----|------------------|-------------------|----------------------|---------------------|--------------------|
 | 2019 | 7,422,037 | 79.21% | 18.72% | 1.82% | 0.25% |
