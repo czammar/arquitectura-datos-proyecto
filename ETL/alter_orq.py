@@ -120,3 +120,39 @@ class downloadDataS3(luigi.Task):
         # Ruta en donde se guarda el archivo solicitado
         output_path = "Tarea_EL.txt"
         return luigi.LocalTarget(output_path)
+
+
+
+# Create tables and squemas
+# "metada_extract.sql"
+# FALTA .rita y sql
+class CreateTables(PostgresQuery):
+    filename = luigi.Parameter()
+    update_id = luigi.Parameter()
+
+    user = MY_USER
+    password = MY_PASS
+    database = MY_DB
+    host = MY_HOST
+    table = "metadatos"
+
+    file_dir = "./utils/sql/metada_extract.sql"
+    query = open(file_dir, "r").read()
+
+
+class RunTables(luigi.Task):
+    filename = luigi.Parameter()
+    update_id = luigi.Parameter()
+
+    def requires(self):
+        return CreateTables(self.filename, self.update_id)
+
+    def run(self):
+        z = str(self.filename) + " " + str(self.update_id)
+
+        with self.output().open('w') as output_file:
+            output_file.write(z)
+
+    def output(self):
+        dir = CURRENT_DIR + "/target/create_tables.txt"
+        return luigi.local_target.LocalTarget(dir)
