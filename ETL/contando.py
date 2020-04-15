@@ -1,6 +1,6 @@
 import boto3
 
-ses = boto3.session.Session(profile_name="dpa", region_name='us-west-2')
+ses = boto3.session.Session(profile_name="educate1", region_name='us-east-1')
 s3 = ses.resource('s3')
 
 
