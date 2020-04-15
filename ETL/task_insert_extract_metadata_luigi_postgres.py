@@ -46,7 +46,7 @@ class InsertExtractMetada(CopyToTable):
         for element in r:
             yield element
 
-def EL_verif_query(url):
+def EL_verif_query(url,anio,mes):
     # Conexion a BD y query para verificacion
     # Lectura de archivo de credenciales en directorio (no subirlo a git)
     credentials = pd.read_csv("postgres_credentials.csv")
@@ -64,14 +64,14 @@ def EL_verif_query(url):
     cursor = connection.cursor()
 
     # Query para verificacion a la base de datos
-    postgreSQL_select_Query = "SELECT * from metadatos.extract WHERE task_status = '" + str(url) + "';"
+    postgreSQL_select_Query = "SELECT * from metadatos.extract WHERE year = '" + str(anio) + "' AND month = '"+ str(mes)+"';"
     cursor.execute(postgreSQL_select_Query)
-    print("Query de verificacion")
+    #print("Query de verificacion "+str(anio)+"/"+"str(mes)")
     select_Query = cursor.fetchall()
     tam = len(select_Query)
     cursor.close()
     connection.close()
-    print("PostgreSQL connection is closed")
+    #print("PostgreSQL connection is closed")
 
     return tam
 

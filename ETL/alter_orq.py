@@ -1,4 +1,4 @@
-# PYTHONPATH='.' AWS_PROFILE=dpa luigi --module alter_orq downloadDataS3 --local-scheduler
+# PYTHONPATH='.' AWS_PROFILE=educate1 luigi --module alter_orq downloadDataS3 --local-scheduler
 import luigi
 import luigi.contrib.s3
 from luigi import Event, Task, build # Utilidades para acciones tras un task exitoso o fallido
@@ -57,7 +57,7 @@ class downloadDataS3(luigi.Task):
         current_month = now.month
 
         # Obtiene anio y mes base (tres anios hacia atras)
-        base_year = current_year - 0
+        base_year = current_year - 3
         base_month = current_month
 
         # Recolectamos IP para metadatos
@@ -75,7 +75,7 @@ class downloadDataS3(luigi.Task):
 
                 #URL para hacer peticion a API rita en anio y mes indicado
                 url_act = self.BASE_URL+str(anio)+"_"+str(mes)+".zip" #url actualizado
-                tam = EL_verif_query(url_act)
+                tam = EL_verif_query(url_act,anio,mes)
 
                 if tam == 0:
 
@@ -84,6 +84,8 @@ class downloadDataS3(luigi.Task):
                     r=requests.get(url_act)
 
                     if r.status_code == 200:
+
+                        print("Carga: " +str(anio)+" - "+str(mes))
 
                         data=r.content # Peticion a la API de Rita, en binario
 
