@@ -4,6 +4,7 @@ from luigi.contrib.postgres import CopyToTable
 
 import pandas as pd
 import luigi
+import psycopg2
 
 class InsertExtractMetada(CopyToTable):
     '''
@@ -45,7 +46,7 @@ class InsertExtractMetada(CopyToTable):
         for element in r:
             yield element
 
-def EL_verif_query():
+def EL_verif_query(url,anio,mes):
     # Conexion a BD y query para verificacion
     # Lectura de archivo de credenciales en directorio (no subirlo a git)
     credentials = pd.read_csv("postgres_credentials.csv")
@@ -63,18 +64,18 @@ def EL_verif_query():
     cursor = connection.cursor()
 
     # Query para verificacion a la base de datos
-    postgreSQL_select_Query = "SELECT * from metadatos.extract WHERE task_status = '" + str(url_act) + "';"
+    postgreSQL_select_Query = "SELECT * from metadatos.extract WHERE year = '" + str(anio) + "' AND month = '"+ str(mes)+"';"
     cursor.execute(postgreSQL_select_Query)
-    print("Query de verificacion")
+    #print("Query de verificacion "+str(anio)+"/"+"str(mes)")
     select_Query = cursor.fetchall()
     tam = len(select_Query)
     cursor.close()
     connection.close()
-    print("PostgreSQL connection is closed")
+    #print("PostgreSQL connection is closed")
 
     return tam
 
-def EL_metadata():
+def EL_metadata(record_to_insert):
 
     # Lectura de archivo de credenciales en directorio (no subirlo a git)
     credentials = pd.read_csv("postgres_credentials.csv")
@@ -91,8 +92,7 @@ def EL_metadata():
     cursor = connection.cursor()
 
     # Query para insertar metadatos
-    postgres_insert_query = """ INSERT INTO metadatos.extract (fecha, nombre_task, year, month, usuario, ip_ec2, tamano_zip, nombre_archivo, ruta_s3, task_status) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s ) """
-    record_to_insert = MiLinaje.to_upsert()
+    postgres_insert_query = """ INSERT INTO metadatos.extract (fecha, nombre_task, year, month, usuario, ip_ec2, tamano_zip, nombre_archivo, ruta_s3, task_status) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s ) """
     cursor.execute(postgres_insert_query, record_to_insert)
     connection .commit()
     cursor.close()

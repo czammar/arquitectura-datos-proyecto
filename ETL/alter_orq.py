@@ -1,4 +1,4 @@
-# PYTHONPATH='.' AWS_PROFILE=dpa luigi --module alter_orq downloadDataS3 --local-scheduler
+# PYTHONPATH='.' AWS_PROFILE=educate1 luigi --module alter_orq downloadDataS3 --local-scheduler
 import luigi
 import luigi.contrib.s3
 from luigi import Event, Task, build # Utilidades para acciones tras un task exitoso o fallido
@@ -39,6 +39,7 @@ class Linaje_raw():
 # Inicializamos la clase que reune los metadatos
 MiLinaje = Linaje_raw()
 
+
 # Tasks de Luigi
 class downloadDataS3(luigi.Task):
     #Definimos los URL base para poder actualizarlo automaticamente despues
@@ -51,7 +52,7 @@ class downloadDataS3(luigi.Task):
     def run(self):
 
         # Obtiene anio y mes correspondiente fecha actual de ejecucion del script
-        now = datetime.datetime.now()
+        now = datetime.now()
         current_year = now.year
         current_month = now.month
 
@@ -59,59 +60,64 @@ class downloadDataS3(luigi.Task):
         base_year = current_year - 3
         base_month = current_month
 
-        # Recolectamos parametros de mes y anio de solicitud descarga a API Rita para metadatos
-        MiLinaje.year = str(base_year)
-        MiLinaje.month = str(base_month)
-
         # Recolectamos IP para metadatos
         MiLinaje.ip_ec2 = str(socket.gethostbyname(socket.gethostname()))
 
         for anio in reversed(range(base_year,current_year+1)):
             for mes in reversed(range(1,12+1)):
 
+                # Recolectamos parametros de mes y anio de solicitud descarga a API Rita para metadatos
+                MiLinaje.year = str(anio)
+                MiLinaje.month = str(mes)
+
                 # Verificamos si en metadatos ya hay registro de esta anio y mes
                 # En caso contario, se intenta descarga
-                tam = EL_verif_query()
+
+                #URL para hacer peticion a API rita en anio y mes indicado
+                url_act = self.BASE_URL+str(anio)+"_"+str(mes)+".zip" #url actualizado
+                tam = EL_verif_query(url_act,anio,mes)
 
                 if tam == 0:
 
                     #Leemos los datos de la API en binario, relativos al archivo en formato zip del periodo en cuestion
-                    url_act = self.BASE_URL+str(anio)+"_"+str(mes)+".zip" #url actualizado
+
                     r=requests.get(url_act)
 
                     if r.status_code == 200:
+
+                        print("Carga: " +str(anio)+" - "+str(mes))
 
                         data=r.content # Peticion a la API de Rita, en binario
 
                         ## Escribimos los archivos que se consultan al API Rita en S3
                         # Autenticación en S3 con boto3
-                        ses = boto3.session.Session(profile_name='dpa', region_name='us-west-2')
+                        ses = boto3.session.Session(profile_name='educate1', region_name='us-east-1')
                         s3_resource = ses.resource('s3')
                         obj = s3_resource.Bucket("test-aws-boto")
                         print(ses)
 
                         # Escribimos el archivo al bucket, usando el binario
                         output_path = "RITA/YEAR="+str(anio)+"/"+str(anio)+"_"+str(mes)+".zip"
-                        obj.put_object(Key=output_path,Body=r.content)`
+                        obj.put_object(Key=output_path,Body=r.content)
 
                         # Recolectamos nombre del .zip y path con el que se guardara consulta a
                         # API de Rita en S3 para metadatos
-                        MiLinaje.ruta_s3 = "s3://test-aws-boto/"+"RITA/YEAR="+str(self.year)+"/"
+                        MiLinaje.ruta_s3 = "s3://test-aws-boto/"+"RITA/YEAR="+str(anio)+"/"
                         MiLinaje.nombre_archivo =  str(anio)+"_"+str(mes)+".zip"
 
                         # Recolectamos tamano del archivo recien escrito en S3 para metadatos
-                        ses = boto3.session.Session(profile_name="dpa", region_name='us-west-2')
+                        ses = boto3.session.Session(profile_name="educate1", region_name='us-east-1')
                         s3 = ses.resource('s3')
                         bucket_name = "test-aws-boto"
                         my_bucket = s3.Bucket(bucket_name)
-                        MiLinaje.tamano_zip = my_bucket.Object(key=MiLinaje.ruta_s3+MiLinaje.nombre_archivo).content_length
+                        MiLinaje.tamano_zip = my_bucket.Object(key="RITA/YEAR="+str(anio)+"/"+str(anio)+"_"+str(mes)+".zip").content_length
 
                         # Recolectamos tatus para metadatos
                         MiLinaje.task_status = "Successful"
 
                         # Insertamos metadatos a DB
                         #InsertExtractMetada()
-                        EL_metadata()
+                        EL_metadata(MiLinaje.to_upsert())
 
 
         os.system('echo OK > Tarea_EL.txt')
@@ -120,3 +126,39 @@ class downloadDataS3(luigi.Task):
         # Ruta en donde se guarda el archivo solicitado
         output_path = "Tarea_EL.txt"
         return luigi.LocalTarget(output_path)
+
+
+
+# Create tables and squemas
+# "metada_extract.sql"
+# FALTA .rita y sql
+# class CreateTables(PostgresQuery):
+#     filename = luigi.Parameter()
+#     update_id = luigi.Parameter()
+#
+#     user = MY_USER
+#     password = MY_PASS
+#     database = MY_DB
+#     host = MY_HOST
+#     table = "metadatos"
+#
+#     file_dir = "./utils/sql/metada_extract.sql"
+#     query = open(file_dir, "r").read()
+#
+#
+# class RunTables(luigi.Task):
+#     filename = luigi.Parameter()
+#     update_id = luigi.Parameter()
+#
+#     def requires(self):
+#         return CreateTables(self.filename, self.update_id)
+#
+#     def run(self):
+#         z = str(self.filename) + " " + str(self.update_id)
+#
+#         with self.output().open('w') as output_file:
+#             output_file.write(z)
+#
+#     def output(self):
+#         dir = CURRENT_DIR + "/target/create_tables.txt"
+#         return luigi.local_target.LocalTarget(dir)
