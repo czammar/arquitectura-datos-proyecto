@@ -163,6 +163,23 @@ class downloadDataS3(luigi.Task):
 #         dir = CURRENT_DIR + "/target/create_tables.txt"
 #         return luigi.local_target.LocalTarget(dir)
 
+# Preparamamos una clase para reunir los metadatos de la etapa de limpieza de datos
+class Linaje_clean_data():
+    def __init__(self, fecha=0, nombre_task=0,year=0, month=0, usuario=0, ip_clean=0, num_filas_modificadas=0, variables_limpias=0, task_status=0):
+        self.fecha = fecha # time stamp
+        self.nombre_task = self.__class__.__name__#nombre_task
+        self.year = year #año de los datos
+        self.month = month #    mes de los datos
+        self.usuario = usuario # Usuario de la maquina de GNU/Linux que corre la instancia
+        self.ip_clean = ip_clean #Corresponde a la dirección IP desde donde se ejecuto la tarea
+        self.num_filas_modificadas = num_filas_modificadas #    número de registros modificados
+        self.variables_limpias = variables_limpias #variables limpias con las que se pasará a la siguiente parte
+        self.task_status= task_status # estatus de ejecución: Fallido, exitoso, etc.
+
+    def to_upsert(self):
+        return (self.fecha, self.nombre_task, self.year, self.month, self.usuario,\
+         self.ip_clean, self.num_filas_modificadas, self.variables_limpias,\
+          self.task_status)
 
 # Preparamamos una clase para reunir los metadatos de la etapa Raw
 class Linaje_feature_engineering():
