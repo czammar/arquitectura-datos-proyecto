@@ -42,14 +42,15 @@ En seguimiento a lo anterior, en esta etapa se realiza la limpieza de los datos 
 | Nombre                     	| Función                                               	|
 |----------------------------	|-------------------------------------------------------	|
 | fecha                      	| fecha de ejecución                                    	|
+| nombre_task               	| nombre del task que se ejecuto                          |
+| year                      	| año de los datos                               	        |
+| month                   	  | mes de los datos                              	        |
 | usuario                    	| quien ejecuto el task*                                	|
-| nombre_task               	| nombre del task que se ejecuto                         	|
-| tipo_columna               	| tipo de datos en cada columna                         	|
 | ip_clean                   	| Corresponde a la dirección IP desde donde se ejecuto la tarea|
-| ejecucion                  	| imprimirá nombre de funciones del script de transform 	|
-| num_observaciones_cargadas 	| número de registros modificados                       	|
-| variables_limpias          	| variables finales con las que se realizará el modelado 	|
+| num_filas_modificadas     	| número de registros modificados                       	|
+| variables_limpias          	| variables con las que se realizará la siguiente tarea (feature engineering) 	|
 | status                     	| estatus de ejecución: Fallido, exitoso, etc.          	|
+
 
 
 ## Etapa Transform
