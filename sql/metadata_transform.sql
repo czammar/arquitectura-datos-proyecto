@@ -23,6 +23,24 @@ CREAT TABLE load(
 )
 ;
 
+###Clean
+
+
+CREAT TABLE clean_data(
+  fecha DATE,
+  nombre_task VARCHAR,
+  year VARCHAR,
+  month VARCHAR,
+  usuario VARCHAR,
+  ip_clean VARCHAR,
+  where_exec VARCHAR,
+  exec VARCHAR,
+  nums_filas_modificadas VARCHAR,
+  variables_limpias VARCHAR,
+  status VARCHAR
+)
+;
+
 ### Feature Engineering
 CREAT TABLE feature_engineering(
     
