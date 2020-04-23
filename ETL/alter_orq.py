@@ -14,7 +14,7 @@ from zipfile import ZipFile
 import os
 from luigi.contrib.postgres import CopyToTable #luigid --port 8082
 import pandas as pd
-from task_insert_extract_metadata_luigi_postgres import InsertExtractMetada, EL_verif_query, EL_metadata
+from task_insert_extract_metadata_luigi_postgres import InsertExtractMetada, EL_verif_query, EL_metadata, EL_rawdata
 
 # Preparamamos una clase para reunir los metadatos de la etapa Raw
 class Linaje_raw():
@@ -57,7 +57,7 @@ class downloadDataS3(luigi.Task):
         current_month = now.month
 
         # Obtiene anio y mes base (tres anios hacia atras)
-        base_year = current_year - 3
+        base_year = current_year - 0
         base_month = current_month
 
         # Recolectamos IP para metadatos
@@ -118,6 +118,17 @@ class downloadDataS3(luigi.Task):
                         # Insertamos metadatos a DB
                         #InsertExtractMetada()
                         EL_metadata(MiLinaje.to_upsert())
+
+                        # Insertamos datos de consulta hacia esquema raw
+                        ## lectura del zip consultado
+                        zf = ZipFile(BytesIO(r.content))
+                        ## extraemos csv y lo renombramos
+                        DATA_CSV='On_Time_Reporting_Carrier_On_Time_Performance_(1987_present)_'+str(anio)+"_"+str(mes)+'.csv'
+                        zf.extract(DATA_CSV)
+                        os.rename(DATA_CSV,'data.csv')
+                        ## Inserta archivo y elimina csv
+                        os.system('bash insert_to_rds.sh')
+                        os.system('rm data.csv')
 
 
         os.system('echo OK > Tarea_EL.txt')
