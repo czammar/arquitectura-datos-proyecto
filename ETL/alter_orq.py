@@ -162,3 +162,24 @@ class downloadDataS3(luigi.Task):
 #     def output(self):
 #         dir = CURRENT_DIR + "/target/create_tables.txt"
 #         return luigi.local_target.LocalTarget(dir)
+
+
+# Preparamamos una clase para reunir los metadatos de la etapa Raw
+class Linaje_feature_engineering():
+    def __init__(self, url = 0, fecha=0, year=0, month=0, usuario=0, ip_ec2=0, filas_modificadas=0, variables=0, ruta_s3=0,task_status=0):
+        self.url = url
+        self.fecha = fecha # time stamp
+        self.nombre_task = self.__class__.__name__#nombre_task
+        self.year = year #
+        self.month = month #
+        self.usuario = usuario # Usuario de la maquina de GNU/Linux que corre la instancia
+        self.ip_ec2 = ip_ec2
+        self.filas_modificadas = filas_modificadas
+        self.variables = variables
+        self.ruta_s3= ruta_s3
+        self.task_status= task_status
+
+    def to_upsert(self):
+        return (self.fecha, self.nombre_task, self.year, self.month, self.usuario,\
+         self.ip_ec2, self.filas_modificadas, self.variables, self.ruta_s3,\
+          self.task_status)
